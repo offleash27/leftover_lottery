@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Leftover Lottery 🎰 | 95+ Real Recipes • No Waste</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FDF8F0; --cream-dark: #F5EDE0;
+            --herb-green: #4A7C59; --herb-light: #6B9E75; --herb-dark: #3A6347;
+            --tomato: #D94F3D; --tomato-light: #E87060;
+            --text-dark: #2D2A26; --text-muted: #7A756E;
+            --white: #FFFFFF;
+            --shadow: rgba(45,42,38,0.08); --shadow-lg: rgba(45,42,38,0.12);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;line-height:1.6;}
+
+        /* HEADER */
+        .header{background:linear-gradient(135deg,var(--herb-green) 0%,var(--herb-dark) 100%);color:#fff;padding:1.6rem 1.5rem 3rem;text-align:center;position:relative;overflow:hidden;}
+        .header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.08) 1px,transparent 1px);background-size:30px 30px;opacity:0.3;}
+        .header-top{position:relative;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.6rem;}
+        .waste-counter{background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);padding:0.35rem 0.7rem;border-radius:20px;font-size:0.75rem;font-weight:500;display:flex;align-items:center;gap:0.3rem;}
+        .recipe-count-badge{background:rgba(255,255,255,0.2);backdrop-filter:blur(10px);padding:0.35rem 0.7rem;border-radius:20px;font-size:0.75rem;font-weight:600;}
+        .header h1{font-size:2rem;font-weight:700;margin-bottom:0.2rem;position:relative;}
+        .header p{font-size:0.9rem;opacity:0.9;max-width:400px;margin:0 auto;position:relative;}
+
+        /* CONTAINER */
+        .container{max-width:900px;margin:0 auto;padding:0 1rem;position:relative;top:-1.5rem;}
+
+        /* INPUT CARD */
+        .input-card{background:#fff;border-radius:20px;padding:1.5rem;box-shadow:0 8px 32px var(--shadow-lg);margin-bottom:1.2rem;}
+        .input-label{font-weight:600;font-size:1rem;margin-bottom:0.8rem;display:block;}
+        .input-wrapper{display:flex;gap:0.5rem;margin-bottom:0.8rem;}
+        .ingredient-input{flex:1;padding:0.8rem 1rem;border:2px solid var(--cream-dark);border-radius:12px;font-family:'Poppins',sans-serif;font-size:0.95rem;outline:none;}
+        .ingredient-input:focus{border-color:var(--herb-green);}
+        .add-btn{background:var(--herb-green);color:#fff;border:none;padding:0.8rem 1.2rem;border-radius:12px;font-weight:600;cursor:pointer;transition:0.2s;white-space:nowrap;}
+        .add-btn:hover{background:var(--herb-dark);}
+        .tags-container{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.8rem;min-height:1.8rem;}
+        .tag{background:linear-gradient(135deg,var(--herb-green),var(--herb-light));color:#fff;padding:0.3rem 0.7rem;border-radius:20px;font-size:0.82rem;font-weight:500;display:flex;align-items:center;gap:0.3rem;animation:tagPop 0.25s ease;}
+        .tag .x{cursor:pointer;opacity:0.8;font-size:1rem;line-height:1;}
+        @keyframes tagPop{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+        .quick-add{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.9rem;}
+        .quick-add-label{font-size:0.78rem;color:var(--text-muted);width:100%;}
+        .quick-btn{background:var(--cream-dark);border:1px solid #E8E0D4;padding:0.3rem 0.65rem;border-radius:15px;font-size:0.78rem;cursor:pointer;transition:0.2s;}
+        .quick-btn:hover{background:var(--herb-green);color:#fff;}
+        .options-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:0.4rem;}
+        .toggle-label{display:flex;align-items:center;gap:0.4rem;font-size:0.83rem;cursor:pointer;}
+        .toggle-label input{accent-color:var(--herb-green);width:15px;height:15px;}
+        .emoji-hint{font-size:0.68rem;color:var(--text-muted);margin-top:0.5rem;text-align:center;}
+
+        /* RUNNING LOW */
+        .restock-panel{margin-top:1rem;background:var(--cream);border-radius:16px;padding:1rem;border:1px solid var(--cream-dark);}
+        .restock-panel h4{margin-bottom:0.8rem;}
+        .low-ingredient-list{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.8rem;}
+        .low-item{background:#fff;padding:0.4rem 0.8rem;border-radius:30px;border:1px solid var(--cream-dark);font-size:0.83rem;}
+        .low-item label{display:flex;align-items:center;gap:0.5rem;cursor:pointer;}
+        .add-custom-low{display:flex;gap:0.5rem;margin-bottom:0.8rem;}
+        .add-custom-low input{flex:1;padding:0.4rem 0.8rem;border-radius:30px;border:1px solid var(--cream-dark);font-family:'Poppins',sans-serif;font-size:0.83rem;outline:none;}
+        .btn-small{background:var(--herb-green);color:#fff;border:none;padding:0.3rem 0.8rem;border-radius:30px;cursor:pointer;font-size:0.78rem;}
+        .btn-restock{background:var(--herb-dark);color:#fff;border:none;padding:0.5rem 1.2rem;border-radius:30px;font-weight:600;cursor:pointer;font-size:0.83rem;}
+
+        /* ACTION BAR */
+        .action-bar{display:flex;gap:0.8rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+        .btn-primary{background:linear-gradient(135deg,var(--tomato),var(--tomato-light));color:#fff;border:none;padding:0.85rem 1.4rem;border-radius:14px;font-weight:600;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;gap:0.4rem;flex:1;justify-content:center;transition:0.2s;}
+        .btn-primary:hover{transform:translateY(-2px);}
+        .btn-secondary{background:#fff;color:var(--herb-green);border:2px solid var(--herb-green);padding:0.85rem 1.4rem;border-radius:14px;font-weight:600;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;gap:0.4rem;flex:1;justify-content:center;transition:0.2s;}
+        .btn-secondary:hover{background:var(--cream-dark);}
+
+        /* FILTER PILLS */
+        .filter-bar{display:none;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;padding:0.8rem;background:#fff;border-radius:16px;box-shadow:0 4px 16px var(--shadow);}
+        .filter-bar.visible{display:flex;}
+        .filter-pill{padding:0.35rem 0.75rem;border-radius:20px;border:1.5px solid var(--cream-dark);background:#fff;font-size:0.78rem;font-weight:500;cursor:pointer;transition:0.2s;white-space:nowrap;}
+        .filter-pill:hover{border-color:var(--herb-green);color:var(--herb-green);}
+        .filter-pill.active{background:var(--herb-green);color:#fff;border-color:var(--herb-green);}
+        .filter-pill.strict-pill.active{background:var(--tomato);border-color:var(--tomato);}
+        .filter-divider{width:1px;background:var(--cream-dark);margin:0 0.2rem;align-self:stretch;}
+
+        /* RESULTS */
+        .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+        .results-count{font-size:0.83rem;color:var(--text-muted);}
+        .recipe-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:2rem;}
+        @media(min-width:640px){.recipe-grid{grid-template-columns:repeat(2,1fr);}}
+
+        /* RECIPE CARD */
+        .recipe-card{background:#fff;border-radius:16px;padding:1.2rem;box-shadow:0 4px 16px var(--shadow);transition:0.2s;animation:cardSlide 0.3s ease forwards;opacity:0;position:relative;}
+        .recipe-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px var(--shadow-lg);}
+        @keyframes cardSlide{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+        .recipe-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;gap:0.5rem;}
+        .recipe-name{font-size:0.98rem;font-weight:600;}
+        .recipe-category{font-size:0.62rem;text-transform:uppercase;background:var(--cream-dark);padding:0.2rem 0.5rem;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+        .quickie-badge{position:absolute;top:10px;right:10px;background:var(--tomato);color:#fff;font-size:0.58rem;padding:0.15rem 0.4rem;border-radius:12px;font-weight:600;}
+        .match-bar{height:5px;background:var(--cream-dark);border-radius:3px;overflow:hidden;margin-bottom:0.25rem;}
+        .match-fill{height:100%;border-radius:3px;}
+        .match-fill.high{background:linear-gradient(90deg,var(--herb-green),var(--herb-light));}
+        .match-fill.medium{background:#E8A838;}
+        .match-info{font-size:0.68rem;color:var(--text-muted);margin-bottom:0.55rem;}
+        .ingredients-list{font-size:0.76rem;margin-bottom:0.55rem;line-height:1.8;}
+        .ing-yes{color:var(--herb-green);font-weight:500;}
+        .ing-no{color:var(--text-muted);}
+        .instr-toggle{font-size:0.74rem;color:var(--herb-green);cursor:pointer;margin-bottom:0.5rem;font-weight:500;user-select:none;}
+        .instr-box{background:var(--cream);padding:0.65rem;border-radius:12px;margin-bottom:0.55rem;border-left:3px solid var(--herb-green);font-size:0.73rem;line-height:1.6;display:none;}
+        .instr-box strong{color:var(--herb-dark);display:block;margin-bottom:0.2rem;}
+        .card-bottom{display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap;}
+        .btn-made{background:var(--cream-dark);border:none;padding:0.28rem 0.75rem;border-radius:20px;font-size:0.72rem;font-weight:600;cursor:pointer;transition:0.2s;}
+        .btn-made.made{background:var(--herb-green);color:#fff;}
+        .btn-share{background:none;border:1.5px solid var(--cream-dark);padding:0.28rem 0.75rem;border-radius:20px;font-size:0.72rem;font-weight:500;cursor:pointer;color:var(--text-muted);transition:0.2s;}
+        .btn-share:hover{border-color:var(--herb-green);color:var(--herb-green);}
+
+        /* SHOP — per-item rows */
+        .shop-section{padding-top:0.6rem;border-top:1px dashed var(--cream-dark);margin-top:0.5rem;}
+        .shop-label{font-size:0.68rem;color:var(--text-muted);margin-bottom:0.35rem;}
+        .missing-item-row{display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0;border-bottom:1px solid var(--cream-dark);gap:0.4rem;}
+        .missing-item-row:last-child{border-bottom:none;}
+        .missing-item-name{font-size:0.75rem;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+        .missing-item-btns{display:flex;gap:0.25rem;flex-shrink:0;}
+        .shop-btn{display:inline-flex;align-items:center;padding:0.2rem 0.45rem;border-radius:7px;font-size:0.62rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;white-space:nowrap;}
+        .shop-amazon{background:#FFF8E7;color:#8B5A00;}
+        .shop-blinkit{background:#F3E5F5;color:#6A1B9A;}
+        .shop-flipkart{background:#E8F5E9;color:#1B5E20;}
+
+        /* NO RESULTS */
+        .no-results{text-align:center;padding:2.5rem 1rem;background:#fff;border-radius:16px;box-shadow:0 4px 16px var(--shadow);margin-bottom:2rem;}
+        .no-results .nr-icon{font-size:2.5rem;margin-bottom:0.5rem;}
+        .no-results h3{margin-bottom:0.3rem;}
+        .no-results p{font-size:0.85rem;color:var(--text-muted);}
+
+        /* EMPTY STATE */
+        .empty-state{text-align:center;padding:3rem 1rem;color:var(--text-muted);}
+        .empty-state .ei{font-size:3rem;margin-bottom:0.5rem;}
+
+        /* TOAST */
+        .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text-dark);color:#fff;padding:0.75rem 1.4rem;border-radius:12px;z-index:4000;transition:transform 0.3s;white-space:nowrap;font-size:0.88rem;}
+        .toast.show{transform:translateX(-50%) translateY(0);}
+
+        /* LOTTERY MODAL */
+        .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:2000;opacity:0;pointer-events:none;transition:0.2s;}
+        .overlay.active{opacity:1;pointer-events:all;}
+        .lottery-modal{background:#fff;border-radius:28px;padding:2rem;width:90%;max-width:380px;text-align:center;}
+        .lottery-modal h2{margin-bottom:0.8rem;}
+        .lottery-result{font-size:1.1rem;font-weight:700;margin:0.8rem 0;color:var(--herb-dark);}
+        .lottery-instr{font-size:0.78rem;color:var(--text-muted);background:var(--cream);padding:0.8rem;border-radius:12px;text-align:left;margin:0.8rem 0;line-height:1.6;max-height:200px;overflow-y:auto;}
+        .btn-close-lot{background:var(--herb-green);color:#fff;border:none;padding:0.6rem 1.8rem;border-radius:30px;font-weight:600;cursor:pointer;margin-top:0.3rem;}
+
+        /* STORE MODAL */
+        .store-modal{background:#fff;border-radius:28px;padding:1.6rem;max-width:340px;width:90%;max-height:80vh;overflow-y:auto;}
+        .store-modal h3{margin-bottom:0.4rem;}
+        .store-modal .subtitle{font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;}
+        .btn-cancel{margin-top:1rem;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.83rem;display:block;margin-left:auto;margin-right:auto;}
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-top">
+        <div class="waste-counter">🌱 <span id="wasteText">Saved ~0 lbs</span></div>
+        <div class="recipe-count-badge" id="recipeCountBadge">🍳 95+ recipes</div>
+    </div>
+    <h1>🎰 Leftover Lottery</h1>
+    <p>Type what's in your fridge — we'll find real recipes</p>
+</header>
+
+<div class="container">
+    <div class="input-card">
+        <label class="input-label">What ingredients do you have? (emojis work too 🍅🥚)</label>
+        <div class="input-wrapper">
+            <input type="text" class="ingredient-input" id="ingredientInput" placeholder="e.g., eggs, tomato, 🧀, banana..." autocomplete="off">
+            <button class="add-btn" onclick="addIngredient()">Add</button>
+        </div>
+        <div class="tags-container" id="tagsContainer"></div>
+        <div class="quick-add">
+            <span class="quick-add-label">Quick add:</span>
+            <button class="quick-btn" onclick="quickAdd('eggs')">🥚 Eggs</button>
+            <button class="quick-btn" onclick="quickAdd('cheese')">🧀 Cheese</button>
+            <button class="quick-btn" onclick="quickAdd('chicken')">🍗 Chicken</button>
+            <button class="quick-btn" onclick="quickAdd('tomato')">🍅 Tomato</button>
+            <button class="quick-btn" onclick="quickAdd('banana')">🍌 Banana</button>
+            <button class="quick-btn" onclick="quickAdd('bread')">🍞 Bread</button>
+            <button class="quick-btn" onclick="quickAdd('rice')">🍚 Rice</button>
+            <button class="quick-btn" onclick="quickAdd('potato')">🥔 Potato</button>
+        </div>
+        <div class="options-row">
+            <label class="toggle-label"><input type="checkbox" id="pantryToggle"> Include pantry staples (salt, oil, butter)</label>
+            <label class="toggle-label"><input type="checkbox" id="runningLowToggle"> 🧾 Running Low mode</label>
+        </div>
+        <div class="emoji-hint">✨ Tip: Use emojis! 🍌🥚🧀🍗🍅🍞 all work</div>
+        <div id="runningLowPanel" style="display:none;"></div>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn-primary" onclick="findRecipes()">🔍 Find Recipes</button>
+        <button class="btn-secondary" onclick="spinLottery()">🎰 Feeling Lucky</button>
+    </div>
+
+    <!-- FILTER BAR (shown after search) -->
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-pill active" data-filter="all" onclick="setFilter('all',this)">All</button>
+        <button class="filter-pill" data-filter="quickie" onclick="setFilter('quickie',this)">⚡ Under 10 min</button>
+        <div class="filter-divider"></div>
+        <button class="filter-pill" data-filter="indian" onclick="setFilter('indian',this)">🇮🇳 Indian</button>
+        <button class="filter-pill" data-filter="asian" onclick="setFilter('asian',this)">🥢 Asian</button>
+        <button class="filter-pill" data-filter="middle eastern" onclick="setFilter('middle eastern',this)">🌙 Middle Eastern</button>
+        <button class="filter-pill" data-filter="western" onclick="setFilter('western',this)">🍔 Western</button>
+        <div class="filter-divider"></div>
+        <button class="filter-pill strict-pill" data-filter="strict" onclick="setFilter('strict',this)">✅ I have everything</button>
+    </div>
+
+    <div class="results-header" id="resultsHeader" style="display:none;">
+        <span style="font-weight:600;">Your Best Matches</span>
+        <span class="results-count" id="resultsCount"></span>
+    </div>
+    <div id="recipeGrid"></div>
+    <div class="empty-state" id="emptyState">
+        <div class="ei">🥗</div>
+        <div style="font-weight:600;margin-bottom:0.3rem;">Add your ingredients above!</div>
+        <p>Try: eggs, banana, bread or 🥚🍌🍞</p>
+    </div>
+</div>
+
+<!-- Lottery Modal -->
+<div class="overlay" id="lotteryOverlay">
+    <div class="lottery-modal">
+        <h2>🎰 Your Lucky Meal</h2>
+        <div class="lottery-result" id="lotteryResult"></div>
+        <div class="lottery-instr" id="lotteryInstr"></div>
+        <button class="btn-close-lot" onclick="closeLottery()">Got it!</button>
+    </div>
+</div>
+
+<!-- Store Modal -->
+<div class="overlay" id="storeModal">
+    <div class="store-modal">
+        <h3>🛒 Buy missing ingredients</h3>
+        <p class="subtitle" id="storeModalSubtitle"></p>
+        <div id="storeModalRows"></div>
+        <button class="btn-cancel" onclick="closeStoreModal()">Close</button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── EMOJI MAP ─────────────────────────────────────────────────
+const emojiMap={"🍎":"apple","🍌":"banana","🥚":"eggs","🧀":"cheese","🍗":"chicken","🍅":"tomato","🧅":"onion","🧄":"garlic","🍞":"bread","🥔":"potato","🥑":"avocado","🥬":"lettuce","🍚":"rice","🍝":"pasta","🥕":"carrot","🥦":"broccoli","🍓":"strawberry","🍊":"orange","🍋":"lemon","🫐":"blueberries","🥭":"mango","🍍":"pineapple","🌽":"corn","🫑":"bell pepper","🥒":"cucumber","🍄":"mushroom","🐟":"fish","🧈":"butter","🥛":"milk","🍯":"honey","🧂":"salt","🌶️":"chili"};
+function e2t(t){let r=t;for(let[e,i]of Object.entries(emojiMap))r=r.replaceAll(e,i);return r;}
+
+// ── RECIPES ───────────────────────────────────────────────────
+const recipes=[
+// EGGS
+{name:"Scrambled Eggs",ingredients:["eggs","butter","salt"],time:4,category:"breakfast",quickie:true,instructions:"Crack eggs into a bowl and whisk well. Melt butter in pan on medium-low. Pour eggs in and stir gently every few seconds. Take off heat just before fully set — residual heat finishes them. Add salt."},
+{name:"Classic Omelette",ingredients:["eggs","cheese","butter","salt"],time:6,category:"breakfast",quickie:true,instructions:"Whisk 2-3 eggs with salt. Melt butter in pan. Pour eggs, let edges set, push in from sides. When mostly set, add cheese on one half, fold over and slide onto plate."},
+{name:"Fried Egg on Toast",ingredients:["eggs","bread","butter","salt"],time:5,category:"breakfast",quickie:true,instructions:"Toast bread. Melt butter in pan, crack egg in. Cook 2 min for runny yolk, 3-4 for set. Season with salt. Place on toast."},
+{name:"Egg Fried Rice",ingredients:["rice","eggs","soy sauce","onion","oil"],time:10,category:"dinner",quickie:true,instructions:"Heat oil on high. Add diced onion, stir 1 min. Push to side, crack eggs in and scramble. Mix with onion. Add cold cooked rice and break lumps. Pour soy sauce, toss 2-3 min."},
+{name:"Tomato Egg Scramble",ingredients:["eggs","tomato","onion","oil","salt"],time:8,category:"breakfast",instructions:"Dice tomato and onion. Heat oil, sauté onion 2 min. Add tomato, cook 2 more min. Pour in beaten eggs, stir until just set. Season. A Chinese classic."},
+{name:"Boiled Eggs",ingredients:["eggs"],time:8,category:"snack",quickie:true,instructions:"Place eggs in cold water, bring to boil. Soft boiled: turn off after 6 min. Hard boiled: keep boiling 8-9 min. Transfer to cold water immediately. Peel and eat."},
+{name:"Egg & Veggie Wrap",ingredients:["eggs","tortilla","cheese","bell pepper","onion"],time:8,category:"lunch",quickie:true,instructions:"Scramble eggs with diced bell pepper and onion. Warm tortilla in the same pan. Fill with eggs and cheese. Roll up tightly and eat."},
+{name:"Shakshuka",ingredients:["eggs","tomato","onion","garlic","bell pepper","oil"],time:15,category:"breakfast",instructions:"Sauté onion, garlic, bell pepper in oil 4 min. Add chopped tomatoes, simmer 5 min. Make wells, crack eggs in. Cover 5-6 min until whites set but yolks still runny."},
+// BREAD
+{name:"Grilled Cheese",ingredients:["bread","cheese","butter"],time:5,category:"lunch",quickie:true,instructions:"Butter both sides of bread. Put cheese between slices. Pan fry on medium until golden brown, 2-3 min per side. Press lightly with spatula for even browning."},
+{name:"Avocado Toast",ingredients:["bread","avocado","salt","lemon"],time:4,category:"breakfast",quickie:true,instructions:"Toast bread until golden. Halve avocado, scoop into bowl. Mash with fork. Add salt and squeeze of lemon. Spread on toast."},
+{name:"French Toast",ingredients:["bread","eggs","milk","butter","cinnamon"],time:8,category:"breakfast",quickie:true,instructions:"Whisk egg, milk and cinnamon in a shallow bowl. Dip bread, coat both sides. Melt butter in pan. Cook 2-3 min per side until golden."},
+{name:"Garlic Bread",ingredients:["bread","butter","garlic"],time:5,category:"snack",quickie:true,instructions:"Mix softened butter with minced garlic. Spread on bread. Toast in pan or oven until golden and fragrant, 3-4 min."},
+{name:"Bread Pudding",ingredients:["bread","eggs","milk","butter","sugar"],time:25,category:"dessert",instructions:"Cube stale bread into baking dish. Whisk eggs, milk and sugar. Pour over bread, press down to soak. Dot with butter. Bake 180°C for 20 min until golden."},
+// CHICKEN
+{name:"Garlic Butter Chicken",ingredients:["chicken","butter","garlic","salt","pepper"],time:15,category:"dinner",instructions:"Season chicken. Melt butter, cook chicken 5-6 min per side until golden. Add garlic last 2 min, baste with garlic butter."},
+{name:"Chicken Stir Fry",ingredients:["chicken","soy sauce","garlic","oil","bell pepper","onion"],time:12,category:"dinner",quickie:true,instructions:"Slice chicken thin. Heat oil on high. Add garlic 30 sec, then chicken. Stir constantly 4-5 min. Add veggies, 2 more min. Splash soy sauce and toss."},
+{name:"Simple Chicken Rice",ingredients:["chicken","rice","garlic","onion","salt","oil"],time:25,category:"dinner",instructions:"Sauté onion and garlic in oil 2 min. Brown chicken on all sides. Add rice and water (1:2). Season. Cover and simmer 18-20 min."},
+{name:"Chicken Sandwich",ingredients:["chicken","bread","lettuce","mayonnaise","tomato"],time:10,category:"lunch",quickie:true,instructions:"Cook chicken with salt and pepper. Slice. Toast bread. Spread mayo. Layer lettuce, chicken and tomato. Close and eat."},
+{name:"Lemon Herb Chicken",ingredients:["chicken","lemon","garlic","oil","salt"],time:20,category:"dinner",instructions:"Mix oil, lemon juice, garlic and salt. Coat chicken. Pan fry 6-7 min per side until cooked through. Squeeze more lemon before serving."},
+// PASTA & RICE
+{name:"Garlic Butter Pasta",ingredients:["pasta","butter","garlic","parmesan","salt"],time:12,category:"dinner",quickie:true,instructions:"Boil pasta in salted water. Melt butter, sauté garlic 1 min. Drain pasta, save a splash of water. Toss in garlic butter, add pasta water if needed. Top with parmesan."},
+{name:"Tomato Pasta",ingredients:["pasta","tomato","garlic","onion","oil","salt"],time:15,category:"dinner",instructions:"Boil pasta. Sauté onion and garlic 3 min. Add tomatoes, simmer 8-10 min into sauce. Season. Drain pasta and toss."},
+{name:"Egg Pasta Carbonara",ingredients:["pasta","eggs","cheese","garlic","butter"],time:12,category:"dinner",instructions:"Boil pasta. Whisk eggs with grated cheese. Sauté garlic in butter. Drain pasta (save water). Off the heat, toss pasta with egg-cheese mix, adding pasta water for creaminess."},
+{name:"Fried Rice",ingredients:["rice","egg","soy sauce","onion","carrot","oil"],time:10,category:"dinner",quickie:true,instructions:"Use day-old cold rice. Heat oil high. Fry onion and carrot 2 min. Scramble egg. Add rice, break clumps. Add soy sauce, toss 2-3 min."},
+{name:"Rice & Beans",ingredients:["rice","kidney beans","onion","garlic","tomato","oil"],time:20,category:"dinner",instructions:"Sauté onion and garlic. Add tomato, cook 3 min. Add rinsed beans and cooked rice. Season. Simmer 5 min."},
+// POTATOES
+{name:"Pan Fried Potatoes",ingredients:["potato","onion","oil","salt","pepper"],time:15,category:"breakfast",instructions:"Dice potatoes small. Heat oil, cook potatoes on medium-high 10-12 min stirring every 2-3 min. Add onion halfway. Season generously."},
+{name:"Mashed Potato",ingredients:["potato","butter","milk","salt"],time:20,category:"dinner",instructions:"Cube potatoes. Boil in salted water until fork-tender ~15 min. Drain. Add butter and warm milk. Mash until smooth. Season."},
+{name:"Microwave Baked Potato",ingredients:["potato","butter","salt"],time:7,category:"dinner",quickie:true,instructions:"Poke potato all over with fork. Microwave on high 5-6 min, flipping halfway. Fork should go in easily. Cut open, add butter and salt."},
+{name:"Potato Omelette",ingredients:["potato","eggs","onion","oil","salt"],time:15,category:"breakfast",instructions:"Slice potato thin. Fry in oil ~8 min until cooked. Add onion. Pour whisked eggs with salt over potatoes. Cook on medium-low until set, flip 1 more min."},
+// FRUITS
+{name:"Banana Pancakes",ingredients:["banana","eggs","flour","butter","milk"],time:10,category:"breakfast",quickie:true,instructions:"Mash banana. Mix in egg, flour and milk into thick batter. Melt butter in pan. Drop spoonfuls, cook 2-3 min per side. No sugar needed."},
+{name:"2-Ingredient Banana Pancakes",ingredients:["banana","eggs"],time:6,category:"breakfast",quickie:true,instructions:"Mash 1 ripe banana with 2 eggs until smooth. Heat non-stick pan. Drop small circles. Cook 1-2 min per side. Great for overripe bananas."},
+{name:"Banana Nice Cream",ingredients:["banana"],time:5,category:"dessert",instructions:"Slice bananas and freeze 2+ hours. Blend frozen bananas until completely smooth and creamy. Eat immediately or refreeze."},
+{name:"Mango Lassi",ingredients:["mango","yogurt","milk","honey"],time:3,category:"drink",quickie:true,instructions:"Blend mango, yogurt and milk together. Sweeten with honey. Blend until smooth. Serve chilled. Add cardamom if you have it."},
+{name:"Fruit Chaat",ingredients:["apple","banana","orange","lemon","salt"],time:5,category:"snack",quickie:true,instructions:"Chop all fruits. Squeeze lemon over everything. Add a pinch of salt. Toss and eat immediately."},
+{name:"Banana Smoothie",ingredients:["banana","milk","honey"],time:3,category:"drink",quickie:true,instructions:"Blend banana, milk and honey until smooth. Add ice if wanted. Drink immediately."},
+// VEGGIES
+{name:"Vegetable Soup",ingredients:["carrot","onion","potato","garlic","oil","salt"],time:20,category:"soup",instructions:"Dice all veg. Sauté onion and garlic 2 min. Add carrot and potato. Cover with water. Boil then simmer 15 min until tender. Season."},
+{name:"Stir Fried Broccoli",ingredients:["broccoli","garlic","soy sauce","oil"],time:7,category:"dinner",quickie:true,instructions:"Cut broccoli into florets. Heat oil high. Add garlic 30 sec. Add broccoli, stir constantly 3-4 min. Splash soy sauce, toss 1 more min. Serve immediately."},
+{name:"Stuffed Bell Peppers",ingredients:["bell pepper","rice","tomato","onion","cheese","oil"],time:30,category:"dinner",instructions:"Cut pepper tops, remove seeds. Mix cooked rice with sautéed onion, tomato and seasoning. Fill peppers. Top with cheese. Bake 180°C for 20-25 min."},
+{name:"Cucumber Raita",ingredients:["cucumber","yogurt","salt","cumin"],time:4,category:"side",quickie:true,instructions:"Grate or dice cucumber. Mix into yogurt. Season with salt and cumin. Chill and serve."},
+{name:"Carrot Stir Fry",ingredients:["carrot","garlic","butter","salt"],time:8,category:"side",quickie:true,instructions:"Julienne carrots thin. Melt butter. Sauté garlic 30 sec. Add carrots, stir fry 5-6 min until tender-crisp. Season."},
+// AVOCADO
+{name:"Classic Guacamole",ingredients:["avocado","tomato","onion","lemon","salt"],time:5,category:"snack",quickie:true,instructions:"Scoop avocado, mash with fork — keep chunky. Stir in diced tomato and onion. Squeeze lemon. Season. Eat with anything."},
+{name:"Avocado Egg Bowl",ingredients:["avocado","eggs","salt","pepper","butter"],time:8,category:"breakfast",quickie:true,instructions:"Scramble eggs with butter. Halve and pit avocado. Pile eggs into avocado half. Season with salt and pepper."},
+// CHEESE
+{name:"Cheese Quesadilla",ingredients:["tortilla","cheese","butter"],time:5,category:"snack",quickie:true,instructions:"Cheese between two tortillas. Lightly butter pan. Cook on medium, press gently. 2-3 min per side until golden and cheese melted. Slice and eat."},
+{name:"Mac and Cheese",ingredients:["pasta","cheese","butter","milk","salt"],time:12,category:"dinner",quickie:true,instructions:"Boil pasta, drain. In same pot, melt butter. Add splash of milk and grated cheese on low, stir until saucy. Add pasta back, coat well. Season."},
+// FISH
+{name:"Pan Fried Fish",ingredients:["fish","lemon","garlic","butter","salt","pepper"],time:10,category:"dinner",quickie:true,instructions:"Season fish. Melt butter on medium-high. Cook fish 3-4 min per side without moving. Add garlic last minute. Squeeze lemon before serving."},
+{name:"Fish Curry",ingredients:["fish","tomato","onion","garlic","oil","salt","chili"],time:18,category:"dinner",instructions:"Sauté onion and garlic until golden. Add tomatoes and chili, cook into sauce. Add fish, coat. Cover and simmer 6-8 min until fish flakes."},
+// SNACKS & SWEET
+{name:"Peanut Butter Toast",ingredients:["bread","peanut butter","banana","honey"],time:3,category:"snack",quickie:true,instructions:"Toast bread. Spread peanut butter. Top with banana slices and drizzle honey."},
+{name:"Cinnamon Apple",ingredients:["apple","butter","cinnamon","honey"],time:8,category:"dessert",quickie:true,instructions:"Slice apple. Melt butter in pan. Add apples and cinnamon. Stir and cook 4-5 min until soft. Drizzle honey."},
+{name:"Honey Yogurt Bowl",ingredients:["yogurt","honey","banana","strawberry"],time:2,category:"breakfast",quickie:true,instructions:"Scoop yogurt into bowl. Slice fruit on top. Drizzle honey generously."},
+{name:"Microwave Mug Cake",ingredients:["flour","eggs","sugar","butter","cocoa","milk"],time:4,category:"dessert",quickie:true,instructions:"Mix all in a large mug. Microwave on high 90 seconds. Center should be just set. Don't overcook. Eat from the mug."},
+// DRINKS
+{name:"Masala Chai",ingredients:["milk","tea","ginger","cardamom","sugar"],time:6,category:"drink",quickie:true,instructions:"Add milk, water, crushed ginger and cardamom to pot. Bring to boil. Add tea and sugar. Simmer 2-3 min. Strain and serve."},
+{name:"Lemonade",ingredients:["lemon","sugar","water"],time:5,category:"drink",quickie:true,instructions:"Squeeze lemons into jug. Add sugar and a bit of warm water, stir until dissolved. Add cold water and ice. Adjust to taste."},
+// 🇮🇳 INDIAN
+{name:"Aloo Sabzi",ingredients:["potato","onion","tomato","garlic","oil","cumin","salt"],time:15,category:"indian",instructions:"Heat oil, add cumin until it splutters. Fry onion and garlic until golden. Add tomato and cook until soft. Add boiled diced potato, mix and simmer 5 min."},
+{name:"Dal Tadka",ingredients:["lentils","onion","tomato","garlic","oil","cumin","salt"],time:25,category:"indian",instructions:"Boil lentils with salt until soft. In pan, heat oil and fry cumin, garlic and onion until golden. Add tomato, cook 3 min. Pour tadka over dal, simmer 5 min."},
+{name:"Paneer Bhurji",ingredients:["paneer","onion","tomato","bell pepper","oil","salt"],time:12,category:"indian",quickie:true,instructions:"Crumble paneer. Sauté onion and bell pepper in oil 3 min. Add tomato, cook 2 min. Add paneer and salt. Stir fry 3-4 min. Eat with bread or roti."},
+{name:"Jeera Rice",ingredients:["rice","cumin","butter","salt"],time:15,category:"indian",instructions:"Melt butter, add cumin seeds until they splutter. Add washed rice, stir to coat. Add water (1:2), salt. Cover and cook 12-14 min."},
+{name:"Egg Curry",ingredients:["eggs","onion","tomato","garlic","oil","salt","cumin"],time:20,category:"indian",instructions:"Hard boil eggs, peel and halve. Fry onion and garlic in oil until golden. Add tomato and cumin, cook into thick masala. Add eggs, coat in sauce. Simmer 5 min."},
+{name:"Poha",ingredients:["flattened rice","onion","potato","oil","cumin","salt","lemon"],time:10,category:"indian",quickie:true,instructions:"Rinse poha and drain. Heat oil, fry cumin and onion 2 min. Add diced potato, cook 5 min. Add poha, salt and lemon juice. Mix gently."},
+{name:"Banana Lassi",ingredients:["banana","yogurt","milk","sugar"],time:3,category:"indian",quickie:true,instructions:"Blend all together until smooth. Adjust sweetness. Serve chilled. Add cardamom if you have it."},
+{name:"Tadka Dal",ingredients:["lentils","garlic","butter","cumin","salt"],time:20,category:"indian",instructions:"Boil lentils with salt until completely soft. Melt butter, fry cumin and sliced garlic until golden. Pour over dal immediately. Stir and serve."},
+{name:"Aloo Paratha",ingredients:["flour","potato","onion","salt","butter"],time:20,category:"indian",instructions:"Make soft dough with flour, water and salt. Mash boiled potato with onion and salt. Stuff filling into dough balls, roll flat. Cook on hot pan with butter until golden both sides."},
+{name:"Chana Masala",ingredients:["chickpeas","onion","tomato","garlic","oil","cumin","salt"],time:20,category:"indian",instructions:"Sauté onion and garlic until golden. Add tomatoes and cumin, cook until thick. Add drained chickpeas, mash a few for thickness. Simmer 10 min."},
+// 🥢 ASIAN
+{name:"Miso Soup",ingredients:["tofu","miso paste","onion","seaweed","water"],time:8,category:"asian",quickie:true,instructions:"Boil water. Dissolve miso paste in a ladle of hot water first — don't boil miso. Add to pot with cubed tofu and sliced onion. Add seaweed. Serve immediately."},
+{name:"Korean Egg Rice",ingredients:["rice","eggs","soy sauce","butter","sesame oil"],time:8,category:"asian",quickie:true,instructions:"Fry egg sunny side up. Put hot rice in bowl. Add knob of butter. Drizzle soy sauce and sesame oil. Place egg on top, break yolk into rice. Mix and eat."},
+{name:"Fried Tofu",ingredients:["tofu","soy sauce","garlic","oil","sesame oil"],time:10,category:"asian",quickie:true,instructions:"Press tofu dry, cube it. Fry in oil on medium-high until golden on all sides. Add garlic last minute. Drizzle soy sauce and sesame oil. Toss and serve."},
+{name:"Asian Cucumber Salad",ingredients:["cucumber","garlic","soy sauce","sesame oil","chili","sugar"],time:5,category:"asian",quickie:true,instructions:"Smash cucumbers with flat of knife, then chop. Mix garlic, soy sauce, sesame oil, chili and pinch of sugar. Toss cucumbers in dressing. Eat immediately."},
+{name:"Congee",ingredients:["rice","garlic","ginger","soy sauce","water","salt"],time:25,category:"asian",instructions:"Boil rice in lots of water (1:8 ratio) with ginger and garlic. Stir occasionally, cook 20-25 min until broken down and creamy. Season with soy sauce and salt."},
+{name:"Pad Thai Style Noodles",ingredients:["noodles","eggs","onion","soy sauce","oil","lemon"],time:12,category:"asian",quickie:true,instructions:"Soak noodles in hot water until soft. Heat oil, scramble eggs. Add drained noodles and onion. Stir fry 2-3 min. Add soy sauce and lemon. Toss well."},
+{name:"Simple Ramen",ingredients:["noodles","eggs","soy sauce","onion","garlic","sesame oil"],time:12,category:"asian",quickie:true,instructions:"Boil noodles. Make broth: simmer water with soy sauce, garlic and onion 5 min. Soft boil egg 6 min. Place noodles in broth, add halved egg, drizzle sesame oil."},
+{name:"Stir Fried Bok Choy",ingredients:["bok choy","garlic","soy sauce","oil","oyster sauce"],time:6,category:"asian",quickie:true,instructions:"Halve bok choy lengthwise. Heat oil on high. Add garlic 20 sec. Add bok choy cut-side down, cook 2 min. Flip, add soy sauce and oyster sauce. 1 more min."},
+{name:"Teriyaki Chicken",ingredients:["chicken","soy sauce","honey","garlic","ginger","oil"],time:15,category:"asian",instructions:"Mix soy sauce, honey, garlic and ginger for sauce. Pan fry chicken in oil 5-6 min per side. Pour sauce over, cook on high 2 min until it thickens and coats."},
+{name:"Gyoza Dumplings",ingredients:["flour","chicken","cabbage","garlic","soy sauce","ginger"],time:30,category:"asian",instructions:"Mix flour with water to make dough, rest 15 min. Mix minced chicken with cabbage, garlic, ginger and soy sauce. Roll dough thin, cut circles, fill and fold. Pan fry until golden, add water and steam 5 min."},
+// 🌙 MIDDLE EASTERN
+{name:"Hummus",ingredients:["chickpeas","garlic","lemon","olive oil","salt","tahini"],time:5,category:"middle eastern",quickie:true,instructions:"Blend chickpeas, garlic, lemon juice, tahini and salt until very smooth. Drizzle olive oil while blending. Add water to adjust consistency. Taste and balance."},
+{name:"Ful Medames",ingredients:["fava beans","garlic","lemon","olive oil","salt","cumin"],time:10,category:"middle eastern",quickie:true,instructions:"Heat fava beans with a splash of water. Mash roughly. Add garlic, lemon juice, olive oil, salt and cumin. Stir well and serve warm with bread."},
+{name:"Fattoush Salad",ingredients:["tomato","cucumber","lettuce","bread","lemon","olive oil","salt"],time:8,category:"middle eastern",quickie:true,instructions:"Toast or fry bread until crispy, break into pieces. Chop tomato, cucumber and lettuce. Mix lemon juice, olive oil and salt for dressing. Toss everything and eat immediately."},
+{name:"Lentil Soup",ingredients:["lentils","onion","garlic","cumin","lemon","oil","salt"],time:25,category:"middle eastern",instructions:"Sauté onion and garlic until golden. Add lentils, water and cumin. Boil then simmer 20 min. Squeeze lemon in at end. Blend if you want it smooth."},
+{name:"Baba Ganoush",ingredients:["eggplant","garlic","lemon","olive oil","salt","tahini"],time:20,category:"middle eastern",instructions:"Char eggplant over flame or under grill, turning, until totally soft. Scoop out flesh. Mix with garlic, lemon, tahini, olive oil and salt."},
+{name:"Tabbouleh",ingredients:["parsley","tomato","onion","lemon","olive oil","salt","bulgur"],time:15,category:"middle eastern",instructions:"Soak bulgur in hot water 10 min, drain. Finely chop parsley, dice tomato and onion. Mix with lemon juice, olive oil and salt. Chill before serving."},
+{name:"Labneh Toast",ingredients:["yogurt","bread","olive oil","salt","garlic"],time:4,category:"middle eastern",quickie:true,instructions:"Use thick strained yogurt as labneh. Toast bread. Spread labneh, drizzle olive oil, add minced garlic and salt."},
+{name:"Quick Shakshuka",ingredients:["eggs","tomato","garlic","oil","salt","cumin"],time:12,category:"middle eastern",quickie:true,instructions:"Sauté garlic in oil 30 sec. Add tomatoes and cumin, simmer 4 min. Crack 
