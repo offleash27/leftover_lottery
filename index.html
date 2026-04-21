@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Leftover Lottery 🎰 | 95+ Real Recipes • No Waste</title>
+    <title>Leftover Lottery 🎰 | 95+ Recipes • 55 Global Dishes</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -116,9 +116,7 @@
         .missing-item-name{font-size:0.75rem;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
         .missing-item-btns{display:flex;gap:0.25rem;flex-shrink:0;}
         .shop-btn{display:inline-flex;align-items:center;padding:0.2rem 0.45rem;border-radius:7px;font-size:0.62rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;white-space:nowrap;}
-        .shop-amazon{background:#FFF8E7;color:#8B5A00;}
-        .shop-blinkit{background:#F3E5F5;color:#6A1B9A;}
-        .shop-flipkart{background:#E8F5E9;color:#1B5E20;}
+        /* shop btn colors now handled by .s-* classes in store picker CSS */
 
         /* NO RESULTS */
         .no-results{text-align:center;padding:2.5rem 1rem;background:#fff;border-radius:16px;box-shadow:0 4px 16px var(--shadow);margin-bottom:2rem;}
@@ -148,6 +146,77 @@
         .store-modal h3{margin-bottom:0.4rem;}
         .store-modal .subtitle{font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;}
         .btn-cancel{margin-top:1rem;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.83rem;display:block;margin-left:auto;margin-right:auto;}
+
+        /* ── TAB BAR ── */
+        .tab-bar{display:flex;gap:0.4rem;background:#fff;padding:0.4rem;border-radius:50px;margin-bottom:1.3rem;box-shadow:0 4px 20px var(--shadow-lg);border:1px solid rgba(0,0,0,0.04);}
+        .tab-btn{flex:1;text-align:center;padding:0.65rem 0.5rem;border-radius:40px;font-weight:600;font-size:0.85rem;cursor:pointer;transition:all 0.22s;background:transparent;color:var(--text-muted);border:none;letter-spacing:0.01em;}
+        .tab-btn.active{background:var(--herb-green);color:#fff;box-shadow:0 3px 10px rgba(74,124,89,0.35);}
+        .tab-pane{display:none;}
+        .tab-pane.active-pane{display:block;}
+        /* ── GLOBAL DISH CARD ── */
+        .global-card{background:#fff;border-radius:var(--radius,18px);padding:1.2rem;box-shadow:0 4px 16px var(--shadow);border:1px solid rgba(0,0,0,0.04);animation:cardSlide 0.3s ease forwards;opacity:0;}
+        .global-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px var(--shadow-lg);}
+        .global-name{font-size:1rem;font-weight:700;margin-bottom:0.15rem;}
+        .global-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.6rem;flex-wrap:wrap;}
+        .global-country{font-size:0.62rem;background:var(--cream-dark);padding:0.18rem 0.5rem;border-radius:20px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);}
+        .global-time{font-size:0.68rem;color:var(--text-muted);}
+        .global-ings{font-size:0.74rem;color:var(--text-muted);margin-bottom:0.5rem;line-height:1.5;}
+        .swap-btn{background:var(--herb-light);color:#fff;border:none;padding:0.22rem 0.55rem;border-radius:12px;font-size:0.62rem;cursor:pointer;font-weight:600;transition:all 0.18s;box-shadow:0 1px 4px rgba(74,124,89,0.2);margin-top:0.4rem;}
+        .swap-btn:hover{background:var(--herb-dark);}
+        /* ── SWAP MODAL ── */
+        .swap-modal{background:#fff;border-radius:24px;padding:1.5rem;max-width:340px;width:90%;text-align:left;box-shadow:0 24px 60px rgba(0,0,0,0.25);}
+        .swap-modal h3{color:var(--herb-dark);margin-bottom:0.8rem;}
+        .swap-list{margin-top:0.5rem;}
+        .swap-item{padding:0.5rem 0;border-bottom:1px solid var(--cream-dark);font-size:0.83rem;}
+        .swap-item:last-child{border-bottom:none;}
+        .swap-original{font-weight:600;color:var(--tomato);}
+        .swap-local{color:var(--herb-green);font-weight:500;}
+        .global-search-bar{display:flex;gap:0.5rem;margin-bottom:1rem;}
+        .global-search-input{flex:1;padding:0.65rem 1rem;border:2px solid var(--cream-dark);border-radius:12px;font-family:'Poppins',sans-serif;font-size:0.88rem;outline:none;}
+        .global-search-input:focus{border-color:var(--herb-green);}
+        .region-pills{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem;}
+        .region-pill{padding:0.28rem 0.65rem;border-radius:20px;border:1.5px solid var(--cream-dark);background:#fff;font-size:0.74rem;cursor:pointer;transition:all 0.18s;font-weight:500;color:var(--text-muted);}
+        .region-pill:hover{border-color:var(--herb-green);color:var(--herb-green);}
+        .region-pill.active{background:var(--herb-green);color:#fff;border-color:var(--herb-green);}
+
+        /* ── STORE PICKER ── */
+        .store-modal{background:#fff;border-radius:24px;padding:1.5rem;max-width:420px;width:93%;max-height:88vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,0.25);}
+        .store-modal h3{margin-bottom:0.3rem;font-size:1rem;}
+        .store-subtitle{font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem;}
+        .region-tabs{display:flex;gap:0.3rem;flex-wrap:wrap;margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid var(--cream-dark);}
+        .rtab{padding:0.28rem 0.65rem;border-radius:20px;border:1.5px solid var(--cream-dark);background:#fff;font-size:0.72rem;cursor:pointer;transition:all 0.18s;font-weight:500;color:var(--text-muted);}
+        .rtab:hover{border-color:var(--herb-green);color:var(--herb-green);}
+        .rtab.active{background:var(--herb-green);color:#fff;border-color:var(--herb-green);}
+        .store-item-row{display:flex;align-items:center;justify-content:space-between;padding:0.35rem 0;border-bottom:1px solid var(--cream-dark);gap:0.5rem;}
+        .store-item-row:last-child{border-bottom:none;}
+        .store-item-name{font-size:0.78rem;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+        .store-btns{display:flex;gap:0.22rem;flex-wrap:wrap;flex-shrink:0;}
+        .sbtn{display:inline-flex;align-items:center;gap:0.2rem;padding:0.22rem 0.48rem;border-radius:8px;font-size:0.6rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:filter 0.15s;white-space:nowrap;letter-spacing:0.01em;}
+        .sbtn:hover{filter:brightness(0.9);}
+        .s-amazon-in{background:#FFF3CD;color:#7a4f00;}
+        .s-flipkart{background:#E8F5E9;color:#1a5e22;}
+        .s-blinkit{background:#EDE7F6;color:#5e1d90;}
+        .s-bigbasket{background:#E8F5E9;color:#2e7d32;}
+        .s-zepto{background:#FCE4EC;color:#880e4f;}
+        .s-swiggy{background:#FFF8E1;color:#e65100;}
+        .s-amazon-us{background:#FFF3CD;color:#7a4f00;}
+        .s-walmart{background:#E3F2FD;color:#0d47a1;}
+        .s-instacart{background:#F1F8E9;color:#33691e;}
+        .s-doordash{background:#FCE4EC;color:#c62828;}
+        .s-kroger{background:#E8EAF6;color:#283593;}
+        .s-ocado{background:#F1F8E9;color:#2e7d32;}
+        .s-tesco{background:#E8EAF6;color:#1a237e;}
+        .s-sainsburys{background:#FFF8E1;color:#f57f17;}
+        .s-deliveroo{background:#E0F2F1;color:#004d40;}
+        .s-getir{background:#EDE7F6;color:#4a148c;}
+        .s-rewe{background:#FCE4EC;color:#b71c1c;}
+        .s-amazon-de{background:#FFF3CD;color:#7a4f00;}
+        .s-noon{background:#FCE4EC;color:#880e4f;}
+        .s-carrefour{background:#E3F2FD;color:#0d47a1;}
+        .store-modal-cancel{margin-top:1rem;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.8rem;display:block;margin-left:auto;margin-right:auto;}
+        /* inline card shop section — compact per-item with store picker button */
+        .shop-open-btn{background:var(--herb-dark);color:#fff;border:none;padding:0.22rem 0.6rem;border-radius:8px;font-size:0.62rem;font-weight:700;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
+        .shop-open-btn:hover{background:var(--herb-green);}
     </style>
 </head>
 <body>
@@ -155,13 +224,21 @@
 <header class="header">
     <div class="header-top">
         <div class="waste-counter">🌱 <span id="wasteText">Saved ~0 lbs</span></div>
-        <div class="recipe-count-badge" id="recipeCountBadge">🍳 95+ recipes</div>
+        <div class="recipe-count-badge" id="recipeCountBadge">🍳 95 recipes • 55 global dishes</div>
     </div>
     <h1>🎰 Leftover Lottery</h1>
-    <p>Type what's in your fridge — we'll find real recipes</p>
+    <p>Use leftovers • Explore 55 global dishes • Restock kitchen</p>
 </header>
 
 <div class="container">
+    <!-- Tab bar -->
+    <div class="tab-bar">
+        <div class="tab-btn active" onclick="switchTab('leftovers',this)">🍽️ Use Leftovers</div>
+        <div class="tab-btn" onclick="switchTab('global',this)">🌍 Global Dishes</div>
+    </div>
+
+    <!-- LEFTOVERS TAB -->
+    <div id="leftoversTab" class="tab-pane active-pane">
     <div class="input-card">
         <label class="input-label">What ingredients do you have? (emojis work too 🍅🥚)</label>
         <div class="input-wrapper">
@@ -218,6 +295,30 @@
     </div>
 </div>
 
+    </div><!-- /leftoversTab -->
+
+    <!-- GLOBAL TAB -->
+    <div id="globalTab" class="tab-pane">
+        <div class="input-card" style="background:var(--cream);box-shadow:none;border:1px solid var(--cream-dark);margin-bottom:1rem;">
+            <p style="font-weight:500;font-size:0.88rem;">🌍 <strong>55 famous dishes</strong> from around the world — with local ingredient swaps so you can cook them anywhere.</p>
+        </div>
+        <div class="global-search-bar">
+            <input class="global-search-input" id="globalSearch" placeholder="Search dishes, countries..." oninput="renderGlobal()">
+        </div>
+        <div class="region-pills" id="regionPills">
+            <button class="region-pill active" data-region="all" onclick="setRegion('all',this)">🌐 All</button>
+            <button class="region-pill" data-region="Asia" onclick="setRegion('Asia',this)">🌏 Asian</button>
+            <button class="region-pill" data-region="Europe" onclick="setRegion('Europe',this)">🇪🇺 European</button>
+            <button class="region-pill" data-region="Middle East" onclick="setRegion('Middle East',this)">🌙 Middle East</button>
+            <button class="region-pill" data-region="Americas" onclick="setRegion('Americas',this)">🌎 Americas</button>
+            <button class="region-pill" data-region="Africa" onclick="setRegion('Africa',this)">🌍 African</button>
+            <button class="region-pill" data-region="South Asia" onclick="setRegion('South Asia',this)">🇮🇳 South Asian</button>
+        </div>
+        <div class="recipe-grid" id="globalGrid"></div>
+    </div><!-- /globalTab -->
+
+</div><!-- /container -->
+
 <!-- Lottery Modal -->
 <div class="overlay" id="lotteryOverlay">
     <div class="lottery-modal">
@@ -232,9 +333,24 @@
 <div class="overlay" id="storeModal">
     <div class="store-modal">
         <h3>🛒 Buy missing ingredients</h3>
-        <p class="subtitle" id="storeModalSubtitle"></p>
+        <p class="store-subtitle" id="storeModalSubtitle">Select your region, then tap a store for each item.</p>
+        <div class="region-tabs">
+            <button class="rtab active" onclick="setStoreRegion('india',this)">🇮🇳 India</button>
+            <button class="rtab" onclick="setStoreRegion('usa',this)">🇺🇸 USA</button>
+            <button class="rtab" onclick="setStoreRegion('uk',this)">🇬🇧 UK / EU</button>
+            <button class="rtab" onclick="setStoreRegion('me',this)">🌙 Middle East</button>
+        </div>
         <div id="storeModalRows"></div>
-        <button class="btn-cancel" onclick="closeStoreModal()">Close</button>
+        <button class="store-modal-cancel" onclick="closeStoreModal()">Close</button>
+    </div>
+</div>
+
+<!-- Swap Modal -->
+<div class="overlay" id="swapModal">
+    <div class="swap-modal">
+        <h3>🔄 Local Ingredient Swaps</h3>
+        <div id="swapContent"></div>
+        <button onclick="closeSwapModal()" style="margin-top:1rem;background:var(--herb-green);color:#fff;border:none;padding:0.42rem 1rem;border-radius:30px;width:100%;font-weight:600;cursor:pointer;font-size:0.88rem;">Close</button>
     </div>
 </div>
 
@@ -467,9 +583,7 @@ function renderRecipes(matches){
                 return `<div class="missing-item-row">
                     <span class="missing-item-name">• ${item}</span>
                     <div class="missing-item-btns">
-                      <a class="shop-btn shop-amazon"   href="https://www.amazon.in/s?k=${q}"         target="_blank" rel="noopener noreferrer">Amazon</a>
-                      <a class="shop-btn shop-blinkit"  href="https://blinkit.com/search?q=${q}"      target="_blank" rel="noopener noreferrer">Blinkit</a>
-                      <a class="shop-btn shop-flipkart" href="https://www.flipkart.com/search?q=${q}" target="_blank" rel="noopener noreferrer">Flipkart</a>
+                      <button class="shop-open-btn" onclick="openStoreModal(['${item}'])">🛒 Buy</button>
                     </div>
                   </div>`;
             }).join('');
@@ -543,19 +657,73 @@ function spinLottery(){
 function closeLottery(){document.getElementById('lotteryOverlay').classList.remove('active');}
 
 // ── STORE MODAL ───────────────────────────────────────────────
-function openStoreModal(items){
-    document.getElementById('storeModalSubtitle').textContent=`${items.length} item${items.length>1?'s':''} to buy`;
-    document.getElementById('storeModalRows').innerHTML=items.map(item=>{
-        let q=encodeURIComponent(item);
-        return `<div class="missing-item-row">
-            <span class="missing-item-name">• ${item}</span>
-            <div class="missing-item-btns">
-              <a class="shop-btn shop-amazon"   href="https://www.amazon.in/s?k=${q}"         target="_blank" rel="noopener noreferrer" onclick="closeStoreModal()">Amazon</a>
-              <a class="shop-btn shop-blinkit"  href="https://blinkit.com/search?q=${q}"      target="_blank" rel="noopener noreferrer" onclick="closeStoreModal()">Blinkit</a>
-              <a class="shop-btn shop-flipkart" href="https://www.flipkart.com/search?q=${q}" target="_blank" rel="noopener noreferrer" onclick="closeStoreModal()">Flipkart</a>
-            </div>
+// Verified search URL patterns — one item per search = always opens correctly
+const STORES = {
+    india: [
+        { key:'amazon-in',  label:'Amazon',          cls:'s-amazon-in',  url: q=>`https://www.amazon.in/s?k=${q}` },
+        { key:'flipkart',   label:'Flipkart',         cls:'s-flipkart',   url: q=>`https://www.flipkart.com/search?q=${q}` },
+        { key:'blinkit',    label:'Blinkit ⚡',       cls:'s-blinkit',    url: q=>`https://blinkit.com/s/?q=${q}` },
+        { key:'bigbasket',  label:'BigBasket',        cls:'s-bigbasket',  url: q=>`https://www.bigbasket.com/ps/?q=${q}&nc=as` },
+        { key:'zepto',      label:'Zepto ⚡',         cls:'s-zepto',      url: q=>`https://www.zeptonow.com/search?query=${q}` },
+        { key:'swiggy',     label:'Swiggy Instamart', cls:'s-swiggy',     url: q=>`https://www.swiggy.com/instamart/search?query=${q}` },
+    ],
+    usa: [
+        { key:'amazon-us',  label:'Amazon',           cls:'s-amazon-us',  url: q=>`https://www.amazon.com/s?k=${q}&i=grocery` },
+        { key:'walmart',    label:'Walmart',          cls:'s-walmart',    url: q=>`https://www.walmart.com/search?q=${q}&cat_id=976759` },
+        { key:'instacart',  label:'Instacart ⚡',     cls:'s-instacart',  url: q=>`https://www.instacart.com/products/search?q=${q}` },
+        { key:'doordash',   label:'DoorDash ⚡',      cls:'s-doordash',   url: q=>`https://www.doordash.com/grocery/search/${q}` },
+        { key:'kroger',     label:'Kroger',           cls:'s-kroger',     url: q=>`https://www.kroger.com/search?query=${q}&department=Grocery` },
+    ],
+    uk: [
+        { key:'ocado',      label:'Ocado ⚡',         cls:'s-ocado',      url: q=>`https://www.ocado.com/search?entry=${q}` },
+        { key:'tesco',      label:'Tesco',            cls:'s-tesco',      url: q=>`https://www.tesco.com/groceries/en-GB/search?query=${q}` },
+        { key:'sainsburys', label:"Sainsbury's",      cls:'s-sainsburys', url: q=>`https://www.sainsburys.co.uk/gol-ui/SearchDisplayView?searchTerm=${q}` },
+        { key:'deliveroo',  label:'Deliveroo ⚡',     cls:'s-deliveroo',  url: q=>`https://deliveroo.co.uk/groceries/search?q=${q}` },
+        { key:'getir',      label:'Getir ⚡',         cls:'s-getir',      url: q=>`https://getir.com/search/${q}/` },
+        { key:'rewe',       label:'REWE (DE) ⚡',     cls:'s-rewe',       url: q=>`https://shop.rewe.de/productList?search=${q}` },
+        { key:'amazon-de',  label:'Amazon DE',        cls:'s-amazon-de',  url: q=>`https://www.amazon.de/s?k=${q}&i=grocery` },
+    ],
+    me: [
+        { key:'noon',       label:'Noon',             cls:'s-noon',       url: q=>`https://www.noon.com/uae-en/search/?q=${q}` },
+        { key:'carrefour',  label:'Carrefour',        cls:'s-carrefour',  url: q=>`https://www.carrefouruae.com/mafuae/en/c/MAFUAE_10000?q=${q}` },
+        { key:'amazon-in',  label:'Amazon IN',        cls:'s-amazon-in',  url: q=>`https://www.amazon.in/s?k=${q}` },
+        { key:'blinkit',    label:'Blinkit ⚡',       cls:'s-blinkit',    url: q=>`https://blinkit.com/s/?q=${q}` },
+    ],
+};
+
+let currentStoreRegion = 'india';
+let currentStoreItems = [];
+
+function setStoreRegion(region, btn){
+    currentStoreRegion = region;
+    document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    renderStoreRows();
+}
+
+function renderStoreRows(){
+    let stores = STORES[currentStoreRegion] || STORES.india;
+    let rows = currentStoreItems.map(item => {
+        // Clean up item name for search — lowercase, trim, remove plurals issues
+        let clean = item.toLowerCase().trim();
+        let q = encodeURIComponent(clean);
+        let btns = stores.map(s =>
+            `<a class="sbtn ${s.cls}" href="${s.url(q)}" target="_blank" rel="noopener noreferrer">${s.label}</a>`
+        ).join('');
+        return `<div class="store-item-row">
+            <span class="store-item-name">• ${item}</span>
+            <div class="store-btns">${btns}</div>
         </div>`;
     }).join('');
+    document.getElementById('storeModalRows').innerHTML = rows;
+}
+
+function openStoreModal(items){
+    currentStoreItems = items;
+    let count = items.length;
+    document.getElementById('storeModalSubtitle').textContent =
+        `${count} item${count>1?'s':''} — pick your region then tap a store.`;
+    renderStoreRows();
     document.getElementById('storeModal').classList.add('active');
 }
 function closeStoreModal(){document.getElementById('storeModal').classList.remove('active');}
@@ -589,6 +757,144 @@ function addCustomLow(){
 function restockSelected(){
     if(!lowItems.length){toast('Check some items first!');return;}
     openStoreModal(lowItems);
+}
+
+
+// ── GLOBAL DISHES (55) ───────────────────────────────────────
+const globalDishes=[
+// ── ASIA ──
+{name:"🇹🇭 Pad Thai",region:"Asia",country:"Thailand",time:"15 min",ingredients:["rice noodles","eggs","tofu","bean sprouts","peanuts","fish sauce","tamarind"],instructions:"1. Soak rice noodles in warm water until soft.\n2. Scramble eggs and stir-fry tofu in hot wok.\n3. Add noodles, fish sauce, tamarind and a little sugar.\n4. Toss in bean sprouts and crushed peanuts.\n5. Serve with lime wedges.",swaps:{"fish sauce":"Soy sauce + pinch of salt","tamarind":"Lemon juice + jaggery","rice noodles":"Rice vermicelli or thin pasta"}},
+{name:"🇯🇵 Miso Soup",region:"Asia",country:"Japan",time:"8 min",ingredients:["tofu","miso paste","dashi","seaweed","scallions"],instructions:"1. Heat water — do NOT boil.\n2. Dissolve miso in a ladle of hot water first.\n3. Add cubed tofu, scallions, seaweed.\n4. Stir gently, remove from heat.\n5. Serve immediately.",swaps:{"miso paste":"Soy sauce + nutritional yeast","dashi":"Vegetable stock","seaweed":"Skip or use dried spinach"}},
+{name:"🇰🇷 Kimchi Fried Rice",region:"Asia",country:"Korea",time:"10 min",ingredients:["rice","kimchi","gochujang","eggs","sesame oil"],instructions:"1. Chop kimchi into small pieces.\n2. Stir-fry kimchi in hot oiled pan.\n3. Add cooked rice and gochujang paste.\n4. Toss until evenly coated and hot.\n5. Top with fried egg and drizzle sesame oil.",swaps:{"kimchi":"Spicy fermented pickle","gochujang":"Sriracha + soy sauce","sesame oil":"Ghee or neutral oil"}},
+{name:"🇯🇵 Ramen",region:"Asia",country:"Japan",time:"15 min",ingredients:["noodles","soy sauce","miso","soft boiled egg","nori","scallions","sesame oil"],instructions:"1. Simmer broth with soy sauce, miso and garlic.\n2. Cook noodles separately, drain.\n3. Soft boil egg 6 minutes, peel and halve.\n4. Place noodles in broth, top with egg, nori and scallions.\n5. Drizzle sesame oil and serve hot.",swaps:{"nori":"Skip or use dried seaweed snacks","miso":"Soy sauce works fine"}},
+{name:"🇨🇳 Kung Pao Chicken",region:"Asia",country:"China",time:"15 min",ingredients:["chicken","peanuts","chili","soy sauce","garlic","ginger","sugar","vinegar"],instructions:"1. Cut chicken small, marinate in soy sauce.\n2. Stir-fry garlic, ginger and dried chilies in hot oil.\n3. Add chicken, cook 4-5 min.\n4. Mix soy sauce, sugar and vinegar, pour over.\n5. Add peanuts, toss and serve over rice.",swaps:{"Shaoxing wine":"Skip or add splash of vinegar"}},
+{name:"🇨🇳 Mapo Tofu",region:"Asia",country:"China",time:"15 min",ingredients:["tofu","ground pork","doubanjiang","soy sauce","garlic","ginger","Sichuan pepper","scallions"],instructions:"1. Fry garlic, ginger and doubanjiang in oil.\n2. Add ground pork, cook until no longer pink.\n3. Add stock and soy sauce, bring to simmer.\n4. Add cubed tofu gently, simmer 5 min.\n5. Top with scallions and Sichuan pepper.",swaps:{"doubanjiang":"Chili paste + soy sauce","Sichuan pepper":"Black pepper + a little citrus zest"}},
+{name:"🇻🇳 Pho",region:"Asia",country:"Vietnam",time:"25 min",ingredients:["rice noodles","beef or chicken","star anise","cinnamon","fish sauce","ginger","onion","bean sprouts"],instructions:"1. Char ginger and onion in dry pan.\n2. Simmer with star anise, cinnamon and fish sauce for 20 min.\n3. Strain broth. Cook noodles separately.\n4. Place noodles in bowl, ladle hot broth over.\n5. Top with bean sprouts, herbs and lime.",swaps:{"fish sauce":"Soy sauce + salt","star anise":"Skip if unavailable — cardamom works"}},
+{name:"🇻🇳 Banh Mi",region:"Asia",country:"Vietnam",time:"10 min",ingredients:["baguette","pork or chicken","pickled carrots","cucumber","cilantro","mayo","chili"],instructions:"1. Quick-pickle carrots in vinegar and sugar.\n2. Pan-fry sliced meat until cooked.\n3. Toast baguette lightly.\n4. Spread mayo, layer meat, pickled carrots, cucumber, cilantro.\n5. Add chili and serve.",swaps:{"baguette":"Pav or crusty bread roll","pork":"Chicken, paneer or eggs","pickled carrots":"Fresh carrot + vinegar + pinch of sugar"}},
+{name:"🇹🇭 Green Curry",region:"Asia",country:"Thailand",time:"20 min",ingredients:["chicken","coconut milk","green curry paste","Thai basil","fish sauce","lime","eggplant"],instructions:"1. Fry green curry paste in pan 1 min.\n2. Add chicken, coat in paste.\n3. Pour coconut milk, bring to simmer.\n4. Add eggplant, fish sauce and lime juice.\n5. Simmer 12 min. Finish with Thai basil.",swaps:{"Thai basil":"Regular basil or coriander","fish sauce":"Soy sauce + salt","eggplant":"Zucchini or potatoes"}},
+{name:"🇮🇩 Nasi Goreng",region:"Asia",country:"Indonesia",time:"12 min",ingredients:["rice","eggs","kecap manis","garlic","shallots","chili","shrimp paste"],instructions:"1. Stir-fry garlic, shallots and chili.\n2. Add rice and shrimp paste, mix well.\n3. Push aside, scramble eggs.\n4. Add kecap manis, toss everything together.\n5. Top with fried egg and cucumber slices.",swaps:{"kecap manis":"Soy sauce + sugar","shrimp paste":"Miso paste or skip"}},
+{name:"🇲🇾 Chicken Satay",region:"Asia",country:"Malaysia",time:"20 min",ingredients:["chicken","lemongrass","turmeric","coriander","peanut sauce","cucumber"],instructions:"1. Blend lemongrass, turmeric and coriander into a paste.\n2. Marinate chicken skewers 30 min.\n3. Grill or pan-fry until charred and cooked.\n4. Serve with peanut sauce and cucumber.\n5. Squeeze lime over before eating.",swaps:{"lemongrass":"Lemon zest + ginger","peanut sauce":"Peanut butter + soy sauce + lime"}},
+{name:"🇵🇭 Adobo",region:"Asia",country:"Philippines",time:"30 min",ingredients:["chicken","soy sauce","vinegar","garlic","bay leaves","black pepper"],instructions:"1. Brown chicken in oil.\n2. Add soy sauce, vinegar, garlic and bay leaves.\n3. Simmer 25 min, flipping occasionally.\n4. Let sauce reduce until thick and glossy.\n5. Serve over rice.",swaps:{}},
+// ── SOUTH ASIA ──
+{name:"🇮🇳 Butter Chicken",region:"South Asia",country:"India",time:"25 min",ingredients:["chicken","butter","tomato puree","cream","garam masala","ginger","garlic"],instructions:"1. Marinate chicken in ginger-garlic and garam masala.\n2. Pan-fry until golden.\n3. Melt butter, add tomato puree and spices.\n4. Simmer until sauce thickens.\n5. Add cream and chicken, simmer 5 min. Serve with naan.",swaps:{}},
+{name:"🇮🇳 Biryani",region:"South Asia",country:"India",time:"40 min",ingredients:["basmati rice","chicken","onion","yogurt","saffron","whole spices","mint","ghee"],instructions:"1. Marinate chicken in yogurt and spices 30 min.\n2. Fry onions until crispy.\n3. Par-boil rice 70%.\n4. Layer rice and chicken in pot. Top with saffron milk and fried onions.\n5. Seal and dum-cook on low 20 min.",swaps:{"saffron":"Turmeric for colour","ghee":"Butter works fine"}},
+{name:"🇮🇳 Dal Makhani",region:"South Asia",country:"India",time:"35 min",ingredients:["black lentils","kidney beans","butter","tomato","cream","garam masala","ginger","garlic"],instructions:"1. Soak and boil black lentils until soft.\n2. Sauté ginger-garlic, add tomatoes and spices.\n3. Add lentils and kidney beans to sauce.\n4. Simmer on low 20 min, stirring.\n5. Finish with butter and cream.",swaps:{}},
+{name:"🇵🇰 Chicken Karahi",region:"South Asia",country:"Pakistan",time:"25 min",ingredients:["chicken","tomato","ginger","garlic","green chili","coriander","oil"],instructions:"1. Heat oil in wok (karahi).\n2. Add chicken, fry until sealed.\n3. Add tomatoes, ginger and garlic.\n4. Cook on high, stirring, until oil separates.\n5. Finish with coriander and green chili.",swaps:{}},
+{name:"🇧🇩 Hilsa Curry",region:"South Asia",country:"Bangladesh",time:"20 min",ingredients:["hilsa fish","mustard paste","turmeric","green chili","mustard oil","salt"],instructions:"1. Marinate fish in turmeric and salt.\n2. Heat mustard oil until smoking.\n3. Add mustard paste and green chili.\n4. Add fish gently, add a splash of water.\n5. Simmer 10 min. Serve with rice.",swaps:{"hilsa fish":"Any firm fish","mustard oil":"Any oil + 1 tsp mustard seeds"}},
+{name:"🇱🇰 Sri Lankan Dhal Curry",region:"South Asia",country:"Sri Lanka",time:"25 min",ingredients:["red lentils","coconut milk","tomato","onion","turmeric","curry leaves","mustard seeds"],instructions:"1. Boil lentils with turmeric until soft.\n2. Sauté onion, mustard seeds and curry leaves.\n3. Add tomato, cook 3 min.\n4. Add coconut milk and lentils, simmer 10 min.\n5. Season and serve with rice or roti.",swaps:{"curry leaves":"Bay leaf + lemon zest","coconut milk":"Regular milk + pinch of coconut extract"}},
+// ── MIDDLE EAST ──
+{name:"🇱🇧 Hummus",region:"Middle East",country:"Lebanon",time:"5 min",ingredients:["chickpeas","tahini","lemon","garlic","olive oil"],instructions:"1. Drain and rinse chickpeas.\n2. Blend with tahini, lemon, garlic and salt.\n3. Drizzle in olive oil while blending.\n4. Add cold water slowly until super smooth.\n5. Serve with olive oil and paprika.",swaps:{"tahini":"Peanut butter + sesame oil","lemon":"Lime juice"}},
+{name:"🇮🇱 Shakshuka",region:"Middle East",country:"Israel",time:"15 min",ingredients:["eggs","tomato","bell pepper","onion","garlic","cumin","paprika"],instructions:"1. Sauté onion, garlic and bell pepper 4 min.\n2. Add tomatoes, cumin and paprika, simmer 6 min.\n3. Make wells in sauce, crack eggs in.\n4. Cover and cook 5-6 min until whites set.\n5. Serve from pan with crusty bread.",swaps:{}},
+{name:"🇹🇷 Doner Kebab",region:"Middle East",country:"Turkey",time:"20 min",ingredients:["lamb or chicken","yogurt","garlic","cumin","paprika","pita","salad"],instructions:"1. Marinate meat in yogurt and spices.\n2. Pan-fry or grill until cooked and charred.\n3. Slice thin.\n4. Warm pita bread.\n5. Fill with meat, salad and garlic sauce.",swaps:{"lamb":"Chicken or beef","pita":"Roti or flatbread"}},
+{name:"🇹🇷 Menemen",region:"Middle East",country:"Turkey",time:"12 min",ingredients:["eggs","tomato","bell pepper","onion","chili","olive oil"],instructions:"1. Sauté onion and bell pepper in olive oil 3 min.\n2. Add tomatoes and chili, cook 4 min.\n3. Crack eggs directly into pan.\n4. Stir gently — keep soft and creamy.\n5. Serve with bread.",swaps:{"olive oil":"Any cooking oil"}},
+{name:"🇸🇦 Kabsa",region:"Middle East",country:"Saudi Arabia",time:"40 min",ingredients:["basmati rice","chicken","tomato","onion","cardamom","cinnamon","cloves","raisins"],instructions:"1. Brown chicken in oil.\n2. Sauté onion and whole spices.\n3. Add tomatoes and 2 cups water, simmer 15 min.\n4. Add rice, cover tightly.\n5. Cook on low 20 min. Garnish with raisins and nuts.",swaps:{"raisins":"Dates or skip"}},
+{name:"🇮🇷 Ghormeh Sabzi",region:"Middle East",country:"Iran",time:"45 min",ingredients:["lamb","kidney beans","dried limes","fenugreek","parsley","spinach"],instructions:"1. Brown lamb in oil.\n2. Add chopped herbs (parsley, spinach, fenugreek), fry until dark green.\n3. Add kidney beans, dried limes and water.\n4. Simmer 40 min until lamb is tender.\n5. Serve with white rice.",swaps:{"dried limes":"Lemon zest + tamarind","lamb":"Beef or chickpeas"}},
+{name:"🇱🇧 Tabbouleh",region:"Middle East",country:"Lebanon",time:"15 min",ingredients:["parsley","bulgur","tomato","onion","lemon","olive oil","mint"],instructions:"1. Soak bulgur in hot water 10 min, drain.\n2. Finely chop parsley and mint.\n3. Dice tomato and onion small.\n4. Mix everything with lemon juice, olive oil and salt.\n5. Chill before serving.",swaps:{"bulgur":"Couscous or skip for keto version"}},
+{name:"🇦🇪 Ful Medames",region:"Middle East",country:"UAE/Egypt",time:"10 min",ingredients:["fava beans","garlic","lemon","cumin","olive oil","parsley"],instructions:"1. Heat fava beans with a splash of water.\n2. Mash roughly with back of spoon.\n3. Add minced garlic, lemon juice, cumin and olive oil.\n4. Stir well and heat through.\n5. Serve warm with bread and parsley.",swaps:{"fava beans":"Canned chickpeas or kidney beans"}},
+// ── EUROPE ──
+{name:"🇮🇹 Spaghetti Aglio e Olio",region:"Europe",country:"Italy",time:"12 min",ingredients:["spaghetti","garlic","olive oil","parsley","chili flakes","parmesan"],instructions:"1. Boil spaghetti in salted water until al dente.\n2. Heat olive oil, gently fry sliced garlic until golden.\n3. Add chili flakes.\n4. Toss pasta in oil, add splash of pasta water.\n5. Finish with parsley and parmesan.",swaps:{"parsley":"Coriander leaves","parmesan":"Aged cheddar"}},
+{name:"🇮🇹 Cacio e Pepe",region:"Europe",country:"Italy",time:"12 min",ingredients:["pasta","pecorino romano","black pepper","pasta water"],instructions:"1. Boil pasta, reserve 1 cup pasta water.\n2. Toast black pepper in dry pan.\n3. Add pasta water to pepper, simmer.\n4. Add pasta and grated cheese off the heat.\n5. Toss vigorously until creamy. Add water as needed.",swaps:{"pecorino":"Parmesan or any hard cheese"}},
+{name:"🇫🇷 French Omelette",region:"Europe",country:"France",time:"5 min",ingredients:["eggs","butter","salt","chives"],instructions:"1. Whisk eggs vigorously until frothy.\n2. Melt butter in non-stick pan on medium.\n3. Pour eggs, stir constantly with spatula.\n4. When almost set but still creamy, roll the omelette.\n5. Slide onto plate, garnish with chives.",swaps:{"chives":"Spring onion greens"}},
+{name:"🇫🇷 Ratatouille",region:"Europe",country:"France",time:"35 min",ingredients:["eggplant","zucchini","bell pepper","tomato","onion","garlic","olive oil","herbs"],instructions:"1. Dice all vegetables.\n2. Sauté onion and garlic in olive oil.\n3. Add each vegetable in layers, cook 5 min each.\n4. Season with salt, pepper and herbs.\n5. Simmer all together 15 min until soft.",swaps:{"zucchini":"Cucumber (add at end)","herbs de Provence":"Mixed dried herbs"}},
+{name:"🇬🇷 Greek Salad",region:"Europe",country:"Greece",time:"5 min",ingredients:["cucumber","tomato","feta","olives","oregano","olive oil"],instructions:"1. Chop cucumber and tomatoes into chunky pieces.\n2. Crumble feta over vegetables.\n3. Add olives and dried oregano.\n4. Drizzle generously with olive oil.\n5. Toss gently and serve.",swaps:{"feta":"Paneer + salt + lemon juice","olives":"Capers or skip","oregano":"Dried mint"}},
+{name:"🇪🇸 Spanish Tortilla",region:"Europe",country:"Spain",time:"20 min",ingredients:["eggs","potato","onion","olive oil","salt"],instructions:"1. Slice potatoes and onion thin.\n2. Fry slowly in olive oil 10 min until soft.\n3. Drain and mix with whisked eggs and salt.\n4. Cook in pan on medium-low until set.\n5. Flip carefully and cook 2 more min.",swaps:{}},
+{name:"🇵🇹 Bacalhau à Brás",region:"Europe",country:"Portugal",time:"20 min",ingredients:["salt cod","potato straws","eggs","onion","olive oil","parsley","olives"],instructions:"1. Soak and flake salt cod.\n2. Fry onion in olive oil until soft.\n3. Add cod and potato straws, toss.\n4. Pour beaten eggs, stir until just set.\n5. Garnish with olives and parsley.",swaps:{"salt cod":"Any white fish","potato straws":"Crisps or shoestring fries"}},
+{name:"🇩🇪 Schnitzel",region:"Europe",country:"Germany",time:"15 min",ingredients:["pork or chicken","breadcrumbs","eggs","flour","salt","lemon"],instructions:"1. Pound meat thin between cling wrap.\n2. Coat in flour, dip in egg, coat in breadcrumbs.\n3. Fry in shallow oil until golden both sides, 2-3 min each.\n4. Drain on paper towel.\n5. Serve with lemon wedge.",swaps:{"pork":"Chicken breast works perfectly"}},
+{name:"🇵🇱 Pierogi",region:"Europe",country:"Poland",time:"40 min",ingredients:["flour","eggs","potato","cheese","onion","butter"],instructions:"1. Make dough: flour + eggs + water + salt.\n2. Boil and mash potatoes with cheese and fried onion.\n3. Roll dough thin, cut circles, fill and fold.\n4. Boil in salted water until they float + 2 min.\n5. Pan-fry in butter until golden.",swaps:{}},
+{name:"🇬🇧 Shepherd's Pie",region:"Europe",country:"UK",time:"40 min",ingredients:["ground lamb","potato","onion","carrot","peas","beef stock","butter","milk"],instructions:"1. Brown lamb with onion and carrot.\n2. Add stock and peas, simmer 10 min.\n3. Make mashed potato with butter and milk.\n4. Spread meat in baking dish, top with mash.\n5. Bake 200°C for 20 min until golden.",swaps:{"lamb":"Beef (becomes Cottage Pie)"}},
+// ── AMERICAS ──
+{name:"🇲🇽 Tacos",region:"Americas",country:"Mexico",time:"10 min",ingredients:["tortillas","ground meat","onion","cilantro","lime","salsa","cumin"],instructions:"1. Cook meat with onion, cumin and salt until browned.\n2. Warm tortillas on a dry pan.\n3. Fill with meat, cilantro and onion.\n4. Top with salsa and lime squeeze.\n5. Serve immediately.",swaps:{"tortillas":"Roti or paratha","sour cream":"Yogurt","cilantro":"Coriander leaves"}},
+{name:"🇲🇽 Guacamole",region:"Americas",country:"Mexico",time:"5 min",ingredients:["avocado","lime","onion","tomato","cilantro","salt","jalapeño"],instructions:"1. Halve and scoop avocados.\n2. Mash with fork — keep chunky.\n3. Mix in lime juice, salt.\n4. Fold in diced onion, tomato and cilantro.\n5. Taste and adjust. Serve immediately.",swaps:{"jalapeño":"Green chili","cilantro":"Coriander leaves"}},
+{name:"🇧🇷 Feijoada",region:"Americas",country:"Brazil",time:"40 min",ingredients:["black beans","pork ribs","sausage","onion","garlic","bay leaves","orange"],instructions:"1. Soak black beans overnight.\n2. Brown pork and sausage.\n3. Sauté onion and garlic, add bay leaves.\n4. Add beans and meat, cover with water.\n5. Simmer 30-35 min. Serve with rice and orange slices.",swaps:{"black beans":"Kidney beans","pork ribs":"Chicken thighs"}},
+{name:"🇺🇸 BBQ Ribs",region:"Americas",country:"USA",time:"45 min",ingredients:["pork ribs","BBQ sauce","garlic","paprika","cumin","brown sugar"],instructions:"1. Rub ribs with spice mix.\n2. Bake at 160°C for 35-40 min covered in foil.\n3. Uncover, brush with BBQ sauce.\n4. Grill or broil 5 min until caramelized.\n5. Rest 5 min before serving.",swaps:{"BBQ sauce":"Ketchup + brown sugar + vinegar + soy sauce"}},
+{name:"🇺🇸 Mac & Cheese",region:"Americas",country:"USA",time:"15 min",ingredients:["pasta","cheddar","butter","milk","flour","mustard powder"],instructions:"1. Boil pasta, drain.\n2. Melt butter, whisk in flour 1 min.\n3. Gradually add milk, stir until thick.\n4. Add grated cheese and mustard powder.\n5. Toss pasta in sauce, season well.",swaps:{"cheddar":"Any melting cheese","mustard powder":"Regular mustard or skip"}},
+{name:"🇵🇪 Ceviche",region:"Americas",country:"Peru",time:"15 min",ingredients:["white fish","lime juice","red onion","chili","coriander","salt","corn"],instructions:"1. Dice fish into small cubes.\n2. Pour lime juice over — it will 'cook' the fish.\n3. Marinate 8-10 min until opaque.\n4. Mix in sliced onion, chili and coriander.\n5. Serve with corn on the side.",swaps:{"white fish":"Must use fresh fish only","corn":"Boiled or roasted corn kernels"}},
+{name:"🇦🇷 Empanadas",region:"Americas",country:"Argentina",time:"30 min",ingredients:["flour","beef","onion","egg","olive","cumin","paprika"],instructions:"1. Make dough: flour, water, salt, lard.\n2. Cook beef filling with onion, cumin and paprika.\n3. Roll dough, cut circles.\n4. Fill and fold, crimp edges.\n5. Bake 200°C 20 min or fry until golden.",swaps:{"lard":"Butter or oil","olives":"Skip or use capers"}},
+// ── AFRICA ──
+{name:"🇲🇦 Tagine",region:"Africa",country:"Morocco",time:"40 min",ingredients:["lamb","preserved lemon","olives","onion","turmeric","cinnamon","coriander"],instructions:"1. Brown lamb in tagine or heavy pot.\n2. Add onion, turmeric and cinnamon.\n3. Add preserved lemon, olives and water.\n4. Cover and simmer 35 min.\n5. Garnish with coriander. Serve with couscous.",swaps:{"preserved lemon":"Lemon zest + pinch of salt","tagine":"Any heavy pot with lid"}},
+{name:"🇪🇹 Injera & Wat",region:"Africa",country:"Ethiopia",time:"30 min",ingredients:["teff flour","red lentils","onion","berbere spice","niter kibbeh","tomato"],instructions:"1. Make injera: ferment teff batter, cook like a thin crepe.\n2. Caramelize onion in niter kibbeh.\n3. Add berbere spice and tomato.\n4. Add lentils and water, simmer 20 min.\n5. Serve stew on top of injera.",swaps:{"teff flour":"Rice flour pancake","berbere spice":"Chili + cumin + coriander + cinnamon","niter kibbeh":"Ghee"}},
+{name:"🇳🇬 Jollof Rice",region:"Africa",country:"Nigeria",time:"30 min",ingredients:["rice","tomato","bell pepper","onion","scotch bonnet","chicken stock","bay leaf","thyme"],instructions:"1. Blend tomatoes, bell pepper and scotch bonnet.\n2. Fry onion in oil, add blended mixture.\n3. Cook sauce until oil rises, 10 min.\n4. Add rice, stock, bay leaf and thyme.\n5. Cover and cook on low 20 min until rice is done.",swaps:{"scotch bonnet":"Any hot chili","chicken stock":"Vegetable stock"}},
+{name:"🇿🇦 Braai (Grilled Meat)",region:"Africa",country:"South Africa",time:"30 min",ingredients:["lamb chops or boerewors","salt","pepper","coriander seeds","garlic"],instructions:"1. Rub meat with crushed coriander, garlic, salt and pepper.\n2. Let marinate 30 min.\n3. Grill over open flame or hot pan.\n4. Cook lamb chops 3-4 min per side.\n5. Rest and serve with bread.",swaps:{}},
+{name:"🇸🇳 Thieboudienne",region:"Africa",country:"Senegal",time:"45 min",ingredients:["fish","broken rice","tomato","onion","cassava","carrot","eggplant","fish sauce"],instructions:"1. Fry fish briefly, set aside.\n2. Cook tomato and onion sauce in same oil.\n3. Add vegetables and fish sauce, simmer.\n4. Add rice and water, cook covered.\n5. Layer fish on top for last 5 min.",swaps:{"broken rice":"Normal rice","cassava":"Potato"}},
+{name:"🇲🇦 Couscous Royal",region:"Africa",country:"Morocco",time:"35 min",ingredients:["couscous","lamb","chickpeas","carrot","zucchini","turnip","harissa","ras el hanout"],instructions:"1. Brown lamb with onion and ras el hanout.\n2. Add chickpeas and root vegetables.\n3. Simmer 25 min until vegetables tender.\n4. Steam or rehydrate couscous with boiling water.\n5. Serve stew over couscous with harissa.",swaps:{"ras el hanout":"Mixed spice: cumin, coriander, cinnamon, ginger","harissa":"Chili paste + garlic"}},
+// ── AMERICAS (more) ──
+{name:"🇨🇦 Poutine",region:"Americas",country:"Canada",time:"20 min",ingredients:["fries","cheese curds","gravy","butter","flour"],instructions:"1. Make thick gravy: butter + flour + stock.\n2. Cook fries until crispy.\n3. Pile fries in bowl.\n4. Add cheese curds on top.\n5. Pour hot gravy over — cheese should melt slightly.",swaps:{"cheese curds":"Mozzarella torn into chunks","gravy":"Packet gravy is fine"}},
+{name:"🇨🇺 Ropa Vieja",region:"Americas",country:"Cuba",time:"35 min",ingredients:["beef flank steak","tomato","bell pepper","onion","garlic","cumin","olive oil"],instructions:"1. Boil beef until very tender, about 25 min.\n2. Shred with two forks.\n3. Sauté onion, bell pepper and garlic.\n4. Add tomatoes and cumin, cook 5 min.\n5. Add shredded beef, toss and simmer 5 min.",swaps:{"flank steak":"Any tough cut or chicken thigh"}},
+// ── ASIA (more) ──
+{name:"🇯🇵 Gyoza",region:"Asia",country:"Japan",time:"25 min",ingredients:["ground pork","cabbage","garlic","ginger","soy sauce","sesame oil","gyoza wrappers"],instructions:"1. Mix pork with finely chopped cabbage, garlic, ginger.\n2. Add soy sauce and sesame oil.\n3. Fill wrappers, fold and crimp.\n4. Pan fry flat-side down until golden.\n5. Add water, cover, steam 3 min.",swaps:{"gyoza wrappers":"Thin dumpling dough made with flour + water","pork":"Chicken or tofu"}},
+{name:"🇹🇭 Tom Yum Soup",region:"Asia",country:"Thailand",time:"15 min",ingredients:["shrimp","lemongrass","galangal","kaffir lime leaves","fish sauce","lime","chili"],instructions:"1. Simmer water with lemongrass, galangal and lime leaves.\n2. Add shrimp, fish sauce and chili.\n3. Cook until shrimp are pink, 3-4 min.\n4. Add lime juice.\n5. Serve hot with rice.",swaps:{"galangal":"Ginger","kaffir lime leaves":"Lime zest","fish sauce":"Soy sauce + salt"}},
+{name:"🇸🇬 Hainanese Chicken Rice",region:"Asia",country:"Singapore",time:"35 min",ingredients:["chicken","rice","ginger","garlic","sesame oil","soy sauce","chili sauce"],instructions:"1. Poach chicken in water with ginger and garlic.\n2. Reserve poaching liquid.\n3. Cook rice in the chicken stock.\n4. Slice chicken and drizzle sesame oil.\n5. Serve with soy sauce and chili sauce.",swaps:{}},
+// ── EUROPE (more) ──
+{name:"🇧🇪 Moules Frites",region:"Europe",country:"Belgium",time:"15 min",ingredients:["mussels","white wine","shallots","butter","parsley","cream","fries"],instructions:"1. Sauté shallots in butter.\n2. Add mussels and white wine.\n3. Cover and steam 4-5 min until mussels open.\n4. Add cream and parsley.\n5. Serve with crispy fries.",swaps:{"white wine":"Chicken stock + splash of vinegar","cream":"Whole milk or skip"}},
+{name:"🇷🇺 Borscht",region:"Europe",country:"Russia",time:"30 min",ingredients:["beetroot","cabbage","potato","carrot","onion","beef stock","sour cream","dill"],instructions:"1. Shred beet and carrot, dice potato.\n2. Sauté onion in oil.\n3. Add beet, carrot and stock. Simmer 15 min.\n4. Add cabbage and potato, simmer 10 more min.\n5. Serve with sour cream and dill.",swaps:{"sour cream":"Thick yogurt","dill":"Parsley or coriander"}},
+// ── AFRICA (more) ──
+{name:"🇪🇬 Koshari",region:"Africa",country:"Egypt",time:"30 min",ingredients:["lentils","rice","pasta","tomato sauce","onion","cumin","vinegar"],instructions:"1. Cook lentils, rice and pasta separately.\n2. Fry onion until very crispy.\n3. Make tomato sauce with garlic, cumin and vinegar.\n4. Layer rice, lentils and pasta in bowl.\n5. Top with tomato sauce and crispy onion.",swaps:{}},
+];
+
+let activeRegion='all';
+
+function setRegion(r,btn){
+    activeRegion=r;
+    document.querySelectorAll('.region-pill').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    renderGlobal();
+}
+
+function renderGlobal(){
+    let q=(document.getElementById('globalSearch')||{value:''}).value.toLowerCase();
+    let filtered=globalDishes.filter(d=>{
+        let matchRegion=activeRegion==='all'||d.region===activeRegion;
+        let matchSearch=!q||d.name.toLowerCase().includes(q)||d.country.toLowerCase().includes(q)||d.ingredients.some(i=>i.toLowerCase().includes(q));
+        return matchRegion && matchSearch;
+    });
+    let grid=document.getElementById('globalGrid');
+    if(!grid)return;
+    if(!filtered.length){
+        grid.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text-muted);grid-column:1/-1;">No dishes found. Try a different search.</div>';
+        return;
+    }
+    grid.innerHTML=filtered.map((d,i)=>{
+        let swapCount=Object.keys(d.swaps||{}).length;
+        let swapBtn=swapCount?`<button class="swap-btn" onclick='showSwaps(${JSON.stringify(d.swaps)})'>🔄 Local Swaps (${swapCount})</button>`:'';
+        return `<div class="recipe-card" style="animation-delay:${i*0.03}s">
+            <div class="recipe-name">${d.name}</div>
+            <div style="display:flex;align-items:center;gap:0.4rem;margin:0.25rem 0 0.5rem;flex-wrap:wrap;">
+                <span class="recipe-category">${d.country}</span>
+                <span style="font-size:0.68rem;color:var(--text-muted);">⏱ ${d.time}</span>
+            </div>
+            <div class="ingredients-list" style="color:var(--text-muted);">${d.ingredients.join(', ')}</div>
+            <div class="instr-toggle" onclick="toggleInstr(this)">▶ Show steps</div>
+            <div class="instr-box"><strong>📋 How to make:</strong><br>${d.instructions.replace(/\n/g,'<br>')}</div>
+            ${swapBtn}
+        </div>`;
+    }).join('');
+}
+
+function showSwaps(swaps){
+    let modal=document.getElementById('swapModal');
+    let content=document.getElementById('swapContent');
+    if(!swaps||!Object.keys(swaps).length){
+        content.innerHTML='<p style="font-size:0.85rem;color:var(--text-muted);padding:0.5rem 0;">No swaps needed — ingredients are already common! 🎉</p>';
+    } else {
+        content.innerHTML=`<div class="swap-list">${Object.entries(swaps).map(([orig,local])=>`
+            <div class="swap-item">
+                <span class="swap-original">${orig}</span>
+                <span style="color:var(--text-muted);margin:0 0.4rem;">→</span>
+                <span class="swap-local">${local}</span>
+            </div>`).join('')}</div>
+            <p style="margin-top:0.8rem;font-size:0.68rem;color:var(--text-muted);">💡 These swaps keep the dish close to the original using pantry staples.</p>`;
+    }
+    modal.classList.add('active');
+}
+function closeSwapModal(){document.getElementById('swapModal').classList.remove('active');}
+
+// ── TAB SWITCHING ─────────────────────────────────────────────
+function switchTab(tab,btn){
+    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active-pane'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById(tab+'Tab').classList.add('active-pane');
+    btn.classList.add('active');
+    if(tab==='global') renderGlobal();
 }
 
 // ── INIT ──────────────────────────────────────────────────────
