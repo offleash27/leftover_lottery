@@ -339,4 +339,265 @@ const recipes=[
 {name:"Baba Ganoush",ingredients:["eggplant","garlic","lemon","olive oil","salt","tahini"],time:20,category:"middle eastern",instructions:"Char eggplant over flame or under grill, turning, until totally soft. Scoop out flesh. Mix with garlic, lemon, tahini, olive oil and salt."},
 {name:"Tabbouleh",ingredients:["parsley","tomato","onion","lemon","olive oil","salt","bulgur"],time:15,category:"middle eastern",instructions:"Soak bulgur in hot water 10 min, drain. Finely chop parsley, dice tomato and onion. Mix with lemon juice, olive oil and salt. Chill before serving."},
 {name:"Labneh Toast",ingredients:["yogurt","bread","olive oil","salt","garlic"],time:4,category:"middle eastern",quickie:true,instructions:"Use thick strained yogurt as labneh. Toast bread. Spread labneh, drizzle olive oil, add minced garlic and salt."},
-{name:"Quick Shakshuka",ingredients:["eggs","tomato","garlic","oil","salt","cumin"],time:12,category:"middle eastern",quickie:true,instructions:"Sauté garlic in oil 30 sec. Add tomatoes and cumin, simmer 4 min. Crack 
+{name:"Quick Shakshuka",ingredients:["eggs","tomato","garlic","oil","salt","cumin"],time:12,category:"middle eastern",quickie:true,instructions:"Sauté garlic in oil 30 sec. Add tomatoes and cumin, simmer 4 min. Crack eggs directly into sauce. Cover and cook 5-6 min until whites set. Eat from pan."},
+{name:"Chicken Shawarma Bowl",ingredients:["chicken","garlic","lemon","cumin","oil","yogurt","salt"],time:20,category:"middle eastern",instructions:"Marinate chicken in garlic, lemon, cumin, oil and salt 10 min. Pan fry or grill until cooked. Slice thin. Serve over rice or bread with yogurt drizzled on top."},
+{name:"Lemon Garlic Lentils",ingredients:["lentils","garlic","lemon","olive oil","salt","cumin"],time:20,category:"middle eastern",instructions:"Boil lentils until just tender. Drain. In a pan, heat olive oil and fry sliced garlic until golden. Add cumin. Pour over lentils. Squeeze lemon generously. Season and serve."},
+// 🍔 WESTERN
+{name:"BLT Sandwich",ingredients:["bread","bacon","lettuce","tomato","mayonnaise"],time:8,category:"western",quickie:true,instructions:"Fry bacon until crispy. Toast bread. Spread mayo on both slices. Layer lettuce, tomato and bacon. Close and cut diagonally."},
+{name:"Classic Oatmeal",ingredients:["oats","milk","banana","honey","cinnamon"],time:6,category:"western",quickie:true,instructions:"Bring milk to simmer, add oats and cinnamon. Stir on medium 3-4 min until thick and creamy. Top with sliced banana and honey."},
+{name:"Pasta Bolognese",ingredients:["pasta","ground beef","tomato","onion","garlic","oil","salt"],time:25,category:"western",instructions:"Brown beef, breaking it up. Add onion and garlic, cook 3 min. Add tomatoes and salt. Simmer 15 min. Boil pasta separately. Toss and serve."},
+{name:"Pancakes",ingredients:["flour","eggs","milk","butter","sugar","baking powder"],time:12,category:"western",quickie:true,instructions:"Mix flour, baking powder and sugar. Add eggs, milk and melted butter. Whisk until mostly smooth. Cook ladlefuls in buttered pan 2-3 min per side until bubbles form."},
+{name:"Creamy Mushroom Soup",ingredients:["mushroom","onion","garlic","butter","milk","salt","flour"],time:20,category:"western",instructions:"Sauté onion and garlic in butter. Add mushrooms, cook until soft. Sprinkle flour, stir 1 min. Add milk gradually stirring constantly. Simmer until thick. Season."},
+{name:"Caesar Salad",ingredients:["lettuce","bread","parmesan","garlic","lemon","mayonnaise","olive oil"],time:10,category:"western",quickie:true,instructions:"Cube and fry bread in oil until crispy. Make dressing: mix mayo, garlic, lemon and parmesan. Toss lettuce in dressing. Top with croutons and extra parmesan."},
+{name:"Scrambled Eggs & Bacon",ingredients:["eggs","bacon","butter","salt","pepper"],time:8,category:"western",quickie:true,instructions:"Fry bacon until crispy, set aside. In same pan with bacon fat, add butter and pour whisked eggs. Stir gently on medium-low until just set. Serve with bacon."},
+{name:"Simple Beef Burger",ingredients:["ground beef","bread","lettuce","tomato","onion","salt","cheese"],time:15,category:"western",instructions:"Season beef, form into patties. Cook in pan 3-4 min per side for medium. Add cheese last minute. Toast bun. Assemble with lettuce, tomato and onion."},
+{name:"Apple Crumble",ingredients:["apple","flour","butter","sugar","cinnamon"],time:30,category:"western",instructions:"Slice apples into baking dish, sprinkle with cinnamon and sugar. Mix flour, cold butter and sugar with fingers until crumbly. Spread over apples. Bake 180°C 25 min until golden."},
+{name:"Baked Mac & Cheese",ingredients:["pasta","cheese","butter","milk","flour","salt"],time:30,category:"western",instructions:"Make cheese sauce: melt butter, whisk in flour 1 min, gradually add milk, stir until thick. Add cheese. Mix with cooked pasta. Top with more cheese, bake 180°C 15-20 min."},
+];
+
+// ── STATE ─────────────────────────────────────────────────────
+const pantry=["salt","pepper","oil","butter","water"];
+let userIngredients=JSON.parse(localStorage.getItem('uIng')||'[]');
+let savedRecipes=JSON.parse(localStorage.getItem('savedR')||'[]');
+let wasteSaved=parseFloat(localStorage.getItem('wasteS')||'0');
+let lowItems=JSON.parse(localStorage.getItem('lowI')||'[]');
+let allMatches=[];
+let activeFilter='all';
+
+// Update badge with actual count
+document.getElementById('recipeCountBadge').textContent=`🍳 ${recipes.length} recipes`;
+
+// ── UTILS ─────────────────────────────────────────────────────
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function save(){localStorage.setItem('uIng',JSON.stringify(userIngredients));renderTags();}
+function getUserSet(){let s=new Set(userIngredients.map(i=>i.toLowerCase()));if(document.getElementById('pantryToggle').checked)pantry.forEach(p=>s.add(p));return s;}
+
+// ── INGREDIENTS ───────────────────────────────────────────────
+function renderTags(){
+    document.getElementById('tagsContainer').innerHTML=userIngredients.map(i=>
+        `<span class="tag">${i} <span class="x" onclick="removeIng('${i}')">&times;</span></span>`
+    ).join('');
+}
+function addIngredient(){
+    let inp=document.getElementById('ingredientInput');
+    let val=e2t(inp.value.trim().toLowerCase());
+    if(!val)return;
+    let added=0;
+    val.split(/[,; ]+/).forEach(v=>{v=v.trim();if(v&&!userIngredients.includes(v)){userIngredients.push(v);added++;}});
+    inp.value='';save();
+    if(added)toast(`Added ${added} ingredient${added>1?'s':''}!`);
+    if(allMatches.length)findRecipes();
+}
+function removeIng(ing){userIngredients=userIngredients.filter(i=>i!==ing);save();if(allMatches.length)findRecipes();}
+function quickAdd(name){
+    if(!userIngredients.includes(name)){userIngredients.push(name);save();toast(`Added ${name}!`);if(allMatches.length)findRecipes();}
+    else toast(`${name} already added`);
+}
+
+// ── FIND RECIPES ──────────────────────────────────────────────
+function findRecipes(){
+    if(!userIngredients.length){toast('Add some ingredients first!');return;}
+    let set=getUserSet();
+    let scored=recipes.map(r=>{
+        let ings=r.ingredients.map(i=>i.toLowerCase());
+        let matched=ings.filter(i=>set.has(i));
+        let pct=Math.round((matched.length/ings.length)*100);
+        return{...r,pct,matched,missing:ings.filter(i=>!set.has(i))};
+    }).filter(r=>r.pct>0).sort((a,b)=>b.pct-a.pct);
+    allMatches=scored;
+    activeFilter='all';
+    document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+    document.getElementById('filterBar').classList.add('visible');
+    renderRecipes(applyFilter(allMatches));
+}
+
+function applyFilter(matches){
+    if(activeFilter==='all') return matches.slice(0,20);
+    if(activeFilter==='quickie') return matches.filter(r=>r.quickie).slice(0,20);
+    if(activeFilter==='strict') return matches.filter(r=>r.pct===100).slice(0,20);
+    // category filter — partial match on category string
+    return matches.filter(r=>r.category.includes(activeFilter)).slice(0,20);
+}
+
+function setFilter(f,btn){
+    activeFilter=f;
+    document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    renderRecipes(applyFilter(allMatches));
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function renderRecipes(matches){
+    document.getElementById('emptyState').style.display='none';
+    document.getElementById('resultsHeader').style.display='flex';
+    document.getElementById('resultsCount').textContent=`${matches.length} recipe${matches.length!==1?'s':''}`;
+
+    if(matches.length===0){
+        document.getElementById('recipeGrid').innerHTML=`
+            <div class="no-results">
+                <div class="nr-icon">🤷</div>
+                <h3>No matches for this filter</h3>
+                <p>Try a different filter, or add more ingredients above.</p>
+            </div>`;
+        return;
+    }
+
+    // Check if any matches at all before showing results
+    if(allMatches.length===0){
+        document.getElementById('recipeGrid').innerHTML=`
+            <div class="no-results">
+                <div class="nr-icon">😕</div>
+                <h3>Nothing matched those ingredients</h3>
+                <p>Try adding a few more things — eggs, bread, rice, or tomato almost always unlock recipes.</p>
+            </div>`;
+        return;
+    }
+
+    document.getElementById('recipeGrid').innerHTML=`<div class="recipe-grid">${matches.map((r,idx)=>{
+        let barClass=r.pct>=70?'high':'medium';
+        let ingHtml=r.ingredients.map(i=>`<span class="${r.matched.includes(i)?'ing-yes':'ing-no'}">${i}</span>`).join(', ');
+        let instrHtml=r.instructions
+            ?`<div class="instr-toggle" onclick="toggleInstr(this)">▶ Show steps</div><div class="instr-box"><strong>📋 Steps:</strong>${r.instructions}</div>`
+            :'';
+        let shopHtml='';
+        if(r.missing.length){
+            let rows=r.missing.map(item=>{
+                let q=encodeURIComponent(item);
+                return `<div class="missing-item-row">
+                    <span class="missing-item-name">• ${item}</span>
+                    <div class="missing-item-btns">
+                      <a class="shop-btn shop-amazon"   href="https://www.amazon.in/s?k=${q}"         target="_blank" rel="noopener noreferrer">Amazon</a>
+                      <a class="shop-btn shop-blinkit"  href="https://blinkit.com/search?q=${q}"      target="_blank" rel="noopener noreferrer">Blinkit</a>
+                      <a class="shop-btn shop-flipkart" href="https://www.flipkart.com/search?q=${q}" target="_blank" rel="noopener noreferrer">Flipkart</a>
+                    </div>
+                  </div>`;
+            }).join('');
+            shopHtml=`<div class="shop-section"><div class="shop-label">🛒 Tap to buy missing:</div>${rows}</div>`;
+        }
+        let made=savedRecipes.includes(r.name);
+        let safeName=r.name.replace(/'/g,"\\'");
+        return `<div class="recipe-card" style="animation-delay:${idx*0.04}s">
+            ${r.quickie?'<div class="quickie-badge">⚡ Under 10 min</div>':''}
+            <div class="recipe-header">
+                <div class="recipe-name">${r.name}</div>
+                <div class="recipe-category">${r.category}</div>
+            </div>
+            <div class="match-bar"><div class="match-fill ${barClass}" style="width:${r.pct}%"></div></div>
+            <div class="match-info">${r.pct}% match • ⏱ ${r.time} min</div>
+            <div class="ingredients-list">${ingHtml}</div>
+            ${instrHtml}
+            <div class="card-bottom">
+                <button class="btn-made ${made?'made':''}" onclick="markMade('${safeName}',this)">${made?'✓ Made it!':'I made this!'}</button>
+                <button class="btn-share" onclick="shareRecipe('${safeName}','${r.instructions?.replace(/'/g,"\\'").substring(0,200)||''}')">📤 Share</button>
+            </div>
+            ${shopHtml}
+        </div>`;
+    }).join('')}</div>`;
+}
+
+function toggleInstr(btn){
+    let box=btn.nextElementSibling;
+    let open=box.style.display==='block';
+    box.style.display=open?'none':'block';
+    btn.textContent=(open?'▶':'▼')+' '+(open?'Show':'Hide')+' steps';
+}
+
+// ── MADE IT ───────────────────────────────────────────────────
+function markMade(name,btn){
+    if(!savedRecipes.includes(name)){
+        savedRecipes.push(name);
+        localStorage.setItem('savedR',JSON.stringify(savedRecipes));
+        wasteSaved+=0.5;localStorage.setItem('wasteS',wasteSaved);
+        document.getElementById('wasteText').textContent=`Saved ~${wasteSaved.toFixed(1)} lbs`;
+        btn.textContent='✓ Made it!';btn.classList.add('made');
+        toast('🌱 Nice! Food saved from waste!');
+    }
+}
+
+// ── SHARE ─────────────────────────────────────────────────────
+function shareRecipe(name,instructions){
+    let text=`🎰 Leftover Lottery Recipe\n\n🍽️ ${name}\n\n${instructions}\n\nFind more at Leftover Lottery!`;
+    if(navigator.share){
+        navigator.share({title:name,text}).catch(()=>{});
+    } else if(navigator.clipboard){
+        navigator.clipboard.writeText(text).then(()=>toast('📋 Recipe copied to clipboard!'));
+    } else {
+        toast('📋 Share not supported on this browser');
+    }
+}
+
+// ── LOTTERY ───────────────────────────────────────────────────
+function spinLottery(){
+    if(!allMatches.length){
+        if(!userIngredients.length){toast('Add ingredients first!');return;}
+        findRecipes();
+    }
+    let filtered=applyFilter(allMatches);
+    if(!filtered.length){toast('No matches for current filter!');return;}
+    let pick=filtered[Math.floor(Math.random()*filtered.length)];
+    document.getElementById('lotteryResult').textContent=pick.name+(pick.quickie?' ⚡':'');
+    document.getElementById('lotteryInstr').innerHTML=`<strong>⏱ ${pick.time} min | ${pick.category}</strong><br><br>${pick.instructions||'Cook and enjoy!'}`;
+    document.getElementById('lotteryOverlay').classList.add('active');
+}
+function closeLottery(){document.getElementById('lotteryOverlay').classList.remove('active');}
+
+// ── STORE MODAL ───────────────────────────────────────────────
+function openStoreModal(items){
+    document.getElementById('storeModalSubtitle').textContent=`${items.length} item${items.length>1?'s':''} to buy`;
+    document.getElementById('storeModalRows').innerHTML=items.map(item=>{
+        let q=encodeURIComponent(item);
+        return `<div class="missing-item-row">
+            <span class="missing-item-name">• ${item}</span>
+            <div class="missing-item-btns">
+              <a class="shop-btn shop-amazon"   href="https://www.amazon.in/s?k=${q}"         target="_blank" rel="noopener noreferrer" onclick="closeStoreModal()">Amazon</a>
+              <a class="shop-btn shop-blinkit"  href="https://blinkit.com/search?q=${q}"      target="_blank" rel="noopener noreferrer" onclick="closeStoreModal()">Blinkit</a>
+              <a class="shop-btn shop-flipkart" href="https://www.flipkart.com/search?q=${q}" target="_blank" rel="noopener noreferrer" onclick="closeStoreModal()">Flipkart</a>
+            </div>
+        </div>`;
+    }).join('');
+    document.getElementById('storeModal').classList.add('active');
+}
+function closeStoreModal(){document.getElementById('storeModal').classList.remove('active');}
+
+// ── RUNNING LOW ───────────────────────────────────────────────
+function renderRunningLow(){
+    let panel=document.getElementById('runningLowPanel');
+    if(!document.getElementById('runningLowToggle').checked){panel.style.display='none';return;}
+    panel.style.display='block';
+    let allItems=[...new Set([...userIngredients,...lowItems])];
+    panel.innerHTML=`<div class="restock-panel">
+        <h4>📦 What's running low?</h4>
+        <div class="low-ingredient-list">${allItems.map(i=>
+            `<div class="low-item"><label><input type="checkbox" class="low-cb" value="${i}" ${lowItems.includes(i)?'checked':''}> ${i}</label></div>`
+        ).join('')}</div>
+        <div class="add-custom-low">
+            <input id="customLow" placeholder="Add custom item...">
+            <button class="btn-small" onclick="addCustomLow()">+ Add</button>
+        </div>
+        <button class="btn-restock" onclick="restockSelected()">🛒 Buy Selected</button>
+    </div>`;
+    panel.querySelectorAll('.low-cb').forEach(cb=>cb.addEventListener('change',()=>{
+        lowItems=Array.from(panel.querySelectorAll('.low-cb:checked')).map(c=>c.value);
+        localStorage.setItem('lowI',JSON.stringify(lowItems));
+    }));
+}
+function addCustomLow(){
+    let v=document.getElementById('customLow').value.trim();
+    if(v&&!lowItems.includes(v)){lowItems.push(v);localStorage.setItem('lowI',JSON.stringify(lowItems));renderRunningLow();}
+}
+function restockSelected(){
+    if(!lowItems.length){toast('Check some items first!');return;}
+    openStoreModal(lowItems);
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+document.getElementById('ingredientInput').addEventListener('keypress',e=>{if(e.key==='Enter')addIngredient();});
+document.getElementById('pantryToggle').addEventListener('change',()=>{if(allMatches.length)findRecipes();});
+document.getElementById('runningLowToggle').addEventListener('change',renderRunningLow);
+renderTags();
+document.getElementById('wasteText').textContent=`Saved ~${wasteSaved.toFixed(1)} lbs`;
+if(lowItems.length){document.getElementById('runningLowToggle').checked=true;renderRunningLow();}
+</script>
+</body>
+</html>
